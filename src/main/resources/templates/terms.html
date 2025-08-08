@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service - Qiwi</title>
+
+  <!-- Shared CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #3d3f5c;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      font-weight: 400;
+    }
+
+    /* SMOOTH ANIMATIONS */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* NAVIGATION STYLES */
+    .navbar {
+      background: #3d3f5c;
+      padding: 1.25rem 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(244, 209, 174, 0.15);
+    }
+
+    .navbar .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: translateY(-2px);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: rgba(244, 209, 174, 0.9);
+      text-decoration: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links a:hover {
+      background-color: rgba(244, 209, 174, 0.15);
+      color: #f4d1ae;
+      transform: translateY(-1px);
+    }
+
+    .nav-links a.active {
+      background-color: rgba(244, 209, 174, 0.2);
+      color: #f4d1ae;
+    }
+
+    /* USER SECTION */
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: rgba(244, 209, 174, 0.9);
+    }
+
+    .user-greeting {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .user-dropdown {
+      position: relative;
+    }
+
+    .user-menu-btn {
+      background: rgba(244, 209, 174, 0.1);
+      border: 1px solid rgba(244, 209, 174, 0.25);
+      color: #f4d1ae;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .user-menu-btn:hover {
+      background: rgba(244, 209, 174, 0.15);
+      border-color: rgba(244, 209, 174, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .user-initial {
+      background: #f4d1ae;
+      color: #3d3f5c;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .user-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      min-width: 200px;
+      z-index: 1000;
+      display: none;
+      margin-top: 0.5rem;
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+    }
+
+    .user-dropdown-menu.show {
+      display: block;
+      animation: dropdownFadeIn 0.2s ease;
+    }
+
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-dropdown-menu a {
+      display: block;
+      padding: 0.875rem 1.25rem;
+      color: #374151;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .user-dropdown-menu a:hover {
+      background: #f9fafb;
+      padding-left: 1.5rem;
+    }
+
+    .user-dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .logout-link {
+      color: #dc2626 !important;
+      font-weight: 500;
+    }
+
+    .logout-link:hover {
+      background: #fef2f2 !important;
+    }
+
+    /* AUTH BUTTONS */
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .auth-btn {
+      padding: 0.75rem 1.75rem;
+      border: 2px solid transparent;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+
+    .auth-btn.primary {
+      background: #f4d1ae;
+      color: #3d3f5c;
+      box-shadow: 0 3px 12px rgba(244, 209, 174, 0.3);
+    }
+
+    .auth-btn.primary:hover {
+      background: #f0c896;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 209, 174, 0.4);
+    }
+
+    .auth-btn.secondary {
+      background: transparent;
+      color: #f4d1ae;
+      border-color: rgba(244, 209, 174, 0.4);
+    }
+
+    .auth-btn.secondary:hover {
+      background: rgba(244, 209, 174, 0.15);
+      border-color: #f4d1ae;
+      transform: translateY(-2px);
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 24px;
+      flex: 1;
+    }
+
+    /* HERO SECTION - Clean white consistent with privacy */
+    .hero-section {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    /* TERMS SECTIONS - Clean white consistent */
+    .terms-section {
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .terms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 0;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .terms-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .terms-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-color: #cbd5e0;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-description {
+      color: #4a5568;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      font-weight: 400;
+    }
+
+    .card-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      color: #4a5568;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    /* ALERTS */
+    .alert {
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      font-weight: 500;
+      border-left: 4px solid;
+    }
+
+    .alert-success {
+      background: #f0fdf4;
+      color: #166534;
+      border-left-color: #22c55e;
+    }
+
+    .alert-error {
+      background: #fef2f2;
+      color: #991b1b;
+      border-left-color: #ef4444;
+    }
+
+    .alert-info {
+      background: #eff6ff;
+      color: #1e40af;
+      border-left-color: #3b82f6;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #2d3748;
+      color: rgba(244, 209, 174, 0.8);
+      text-align: center;
+      padding: 3rem 0;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      color: rgba(244, 209, 174, 0.8);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: rgba(244, 209, 174, 0.9);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #f4d1ae;
+      transform: translateY(-1px);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .navbar .container {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+
+      .main-content {
+        padding: 2rem 20px;
+      }
+
+      .hero-section, .terms-section {
+        padding: 2rem 1.5rem;
+      }
+
+      .hero-title {
+        font-size: 1.75rem;
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+      }
+
+      .terms-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- NAVIGATION BAR -->
+<nav class="navbar">
+  <div class="container">
+    <!-- LOGO -->
+    <a href="/" class="logo">
+      <span style="color: #f4d1ae; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;">Qiwi</span>
+    </a>
+
+    <!-- NAVIGATION LINKS (when logged in) -->
+    <ul class="nav-links" id="navLinks" style="display: none;">
+      <li><a href="#" id="dashboardLink">Dashboard</a></li>
+      <li><a href="#" id="browseTutorsLink">Find Tutors</a></li>
+      <li><a href="#" id="messagesLink">Messages</a></li>
+    </ul>
+
+    <!-- NAVIGATION LINKS (when logged out) -->
+    <ul class="nav-links" id="publicNavLinks">
+      <li><a href="/">Home</a></li>
+      <li><a href="/universities">Universities</a></li>
+      <li><a href="/how-it-works">How It Works</a></li>
+    </ul>
+
+    <!-- USER SECTION (when logged in) -->
+    <div class="user-section" id="userSection" style="display: none;">
+      <div class="user-info">
+        <span class="user-greeting" id="userGreeting">Welcome!</span>
+        <div class="user-dropdown">
+          <button class="user-menu-btn" onclick="toggleUserMenu()">
+            <div class="user-initial" id="userInitial">U</div>
+            <span id="userName">User</span>
+            <span>▼</span>
+          </button>
+          <div class="user-dropdown-menu" id="userDropdownMenu">
+            <a href="#" onclick="switchRole()" id="roleSwitchLink">Switch Role</a>
+            <a href="#" onclick="viewProfile()" id="profileLink">Edit Profile</a>
+            <hr>
+            <a href="#" onclick="logout()" class="logout-link">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUTH BUTTONS (when logged out) -->
+    <div class="auth-buttons" id="authButtons">
+      <a href="/login" class="auth-btn secondary">Login</a>
+      <a href="/register" class="auth-btn primary">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <h1 class="hero-title">Terms of Service</h1>
+    <p class="hero-subtitle">
+      Effective Date: August 10, 2025
+    </p>
+  </section>
+
+  <!-- AGREEMENT & ELIGIBILITY SECTION -->
+  <section class="terms-section">
+    <h2 class="section-title">Agreement & Eligibility</h2>
+
+    <div class="terms-grid">
+      <div class="terms-card">
+        <h3 class="card-title">Acceptance of Terms</h3>
+        <p class="card-description">By accessing or using QIWI.edu, you agree to these Terms of Use and our Privacy Policy:</p>
+        <ul class="card-list">
+          <li>You accept all terms and conditions</li>
+          <li>You agree to our Privacy Policy</li>
+          <li>Continued use constitutes agreement</li>
+          <li>If you disagree, please discontinue use</li>
+        </ul>
+      </div>
+
+      <div class="terms-card">
+        <h3 class="card-title">User Eligibility</h3>
+        <p class="card-description">QIWI is designed for university students and recent graduates:</p>
+        <ul class="card-list">
+          <li>Must be at least 18 years old</li>
+          <li>Current university student or recent graduate</li>
+          <li>Must have authority to enter agreements</li>
+          <li>Valid university email required</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- USER RESPONSIBILITIES SECTION -->
+  <section class="terms-section">
+    <h2 class="section-title">User Responsibilities</h2>
+
+    <div class="terms-grid">
+      <div class="terms-card">
+        <h3 class="card-title">Account Management</h3>
+        <p class="card-description">You are responsible for maintaining your account security:</p>
+        <ul class="card-list">
+          <li>Keep login credentials confidential</li>
+          <li>Use your university email for registration</li>
+          <li>Provide accurate information</li>
+          <li>Notify us of any unauthorized access</li>
+        </ul>
+      </div>
+
+      <div class="terms-card">
+        <h3 class="card-title">User Conduct</h3>
+        <p class="card-description">All users must engage respectfully and professionally:</p>
+        <ul class="card-list">
+          <li>No spam, harassment, or abuse</li>
+          <li>No misleading information</li>
+          <li>Respect other users' time and effort</li>
+          <li>Follow academic integrity standards</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM USAGE SECTION -->
+  <section class="terms-section">
+    <h2 class="section-title">Platform Usage & Limitations</h2>
+
+    <div class="terms-grid">
+      <div class="terms-card">
+        <h3 class="card-title">Platform Purpose</h3>
+        <p class="card-description">QIWI facilitates peer-to-peer tutoring connections:</p>
+        <ul class="card-list">
+          <li>Connects students for academic support</li>
+          <li>Provides messaging and scheduling tools</li>
+          <li>Enables resource sharing</li>
+          <li>Acts as a facilitator only</li>
+        </ul>
+      </div>
+
+      <div class="terms-card">
+        <h3 class="card-title">Service Limitations</h3>
+        <p class="card-description">We do not guarantee specific outcomes:</p>
+        <ul class="card-list">
+          <li>No guarantee of academic improvement</li>
+          <li>Cannot resolve academic disputes</li>
+          <li>Not responsible for user interactions</li>
+          <li>Service may be modified or discontinued</li>
+        </ul>
+      </div>
+
+      <div class="terms-card">
+        <h3 class="card-title">Intellectual Property</h3>
+        <p class="card-description">All platform content and software is owned by QIWI:</p>
+        <ul class="card-list">
+          <li>Platform branding and design protected</li>
+          <li>No copying or redistribution allowed</li>
+          <li>User content remains user property</li>
+          <li>Permission required for commercial use</li>
+        </ul>
+      </div>
+
+      <div class="terms-card">
+        <h3 class="card-title">Limitation of Liability</h3>
+        <p class="card-description">QIWI's liability is limited:</p>
+        <ul class="card-list">
+          <li>Not liable for user interactions</li>
+          <li>No responsibility for academic outcomes</li>
+          <li>Not liable for financial arrangements</li>
+          <li>Service provided "as is"</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGAL SECTION -->
+  <section class="terms-section">
+    <h2 class="section-title">Legal & Modifications</h2>
+
+    <div class="terms-grid">
+      <div class="terms-card">
+        <h3 class="card-title">Governing Law</h3>
+        <p class="card-description">This agreement is governed by applicable laws:</p>
+        <ul class="card-list">
+          <li>Subject to New York State law</li>
+          <li>Or Belgian law (jurisdiction to be clarified)</li>
+          <li>Disputes resolved through proper channels</li>
+          <li>Final jurisdiction upon incorporation</li>
+        </ul>
+      </div>
+
+      <div class="terms-card">
+        <h3 class="card-title">Service Modifications</h3>
+        <p class="card-description">We reserve the right to modify our services:</p>
+        <ul class="card-list">
+          <li>Features may be added or removed</li>
+          <li>Terms may be updated</li>
+          <li>Users will be notified of changes</li>
+          <li>Continued use implies acceptance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLASH MESSAGES -->
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+  <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+  <div th:if="${info}" class="alert alert-info" th:text="${info}"></div>
+
+  <!-- PAGE CONTENT -->
+  <div th:fragment="content">
+    <!-- Page-specific content will be inserted here -->
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="/about">About Qiwi</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="https://www.linkedin.com/company/qiwiedu/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="mailto:support@qiwi.com">Email Us</a>
+    </div>
+    <p class="footer-text">© 2024 Qiwi. Connecting university students through peer tutoring.</p>
+  </div>
+</footer>
+
+<!-- SHARED JAVASCRIPT -->
+<script th:inline="javascript">
+  // Global variables
+  const API_BASE = '/api';
+  const currentUserId = /*[[${userId}]]*/ null;
+  let currentUser = null;
+
+  // Initialize navigation on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    initializeNavigation();
+  });
+
+  // NAVIGATION FUNCTIONS
+  function initializeNavigation() {
+    // Load user from localStorage
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      currentUser = JSON.parse(storedUser);
+      showLoggedInNav();
+    } else if (currentUserId) {
+      // Create user object from page data
+      currentUser = {
+        id: currentUserId,
+        name: 'Student',
+        role: 'TUTEE'
+      };
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      showLoggedInNav();
+    } else {
+      showLoggedOutNav();
+    }
+  }
+
+  function showLoggedInNav() {
+    document.getElementById('navLinks').style.display = 'flex';
+    document.getElementById('publicNavLinks').style.display = 'none';
+    document.getElementById('userSection').style.display = 'flex';
+    document.getElementById('authButtons').style.display = 'none';
+
+    if (currentUser) {
+      updateUserInfo();
+      updateNavigationLinks();
+    }
+  }
+
+  function showLoggedOutNav() {
+    document.getElementById('navLinks').style.display = 'none';
+    document.getElementById('publicNavLinks').style.display = 'flex';
+    document.getElementById('userSection').style.display = 'none';
+    document.getElementById('authButtons').style.display = 'flex';
+  }
+
+  function updateUserInfo() {
+    const userGreeting = document.getElementById('userGreeting');
+    const userInitial = document.getElementById('userInitial');
+    const userName = document.getElementById('userName');
+    const roleSwitchLink = document.getElementById('roleSwitchLink');
+
+    if (userGreeting) {
+      userGreeting.textContent = `Hello, ${currentUser.name || 'Student'}!`;
+    }
+
+    if (userInitial) {
+      userInitial.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+    }
+
+    if (userName) {
+      userName.textContent = currentUser.name || 'Student';
+    }
+
+    if (roleSwitchLink) {
+      const currentRole = currentUser.role || 'TUTEE';
+      const switchToRole = currentRole === 'TUTOR' ? 'Student' : 'Tutor';
+      roleSwitchLink.textContent = `Switch to ${switchToRole}`;
+    }
+  }
+
+  function updateNavigationLinks() {
+    if (!currentUser) return;
+
+    const userId = currentUser.id;
+    const role = currentUser.role || 'TUTEE';
+
+    const dashboardLink = document.getElementById('dashboardLink');
+    const browseTutorsLink = document.getElementById('browseTutorsLink');
+    const messagesLink = document.getElementById('messagesLink');
+
+    if (dashboardLink) {
+      dashboardLink.href = `/dashboard?userId=${userId}&role=${role}`;
+    }
+
+    if (browseTutorsLink) {
+      browseTutorsLink.href = `/browse-tutors?userId=${userId}`;
+    }
+
+    if (messagesLink) {
+      messagesLink.href = `/messages?userId=${userId}`;
+    }
+  }
+
+  // USER MENU FUNCTIONS
+  function toggleUserMenu() {
+    const dropdown = document.getElementById('userDropdownMenu');
+    if (dropdown) {
+      dropdown.classList.toggle('show');
+    }
+  }
+
+  function switchRole() {
+    if (!currentUser) return;
+
+    const newRole = currentUser.role === 'TUTOR' ? 'TUTEE' : 'TUTOR';
+    currentUser.role = newRole;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+    window.location.href = `/dashboard?userId=${currentUser.id}&role=${newRole}`;
+  }
+
+  function viewProfile() {
+    if (!currentUser) return;
+
+    const role = currentUser.role || 'TUTEE';
+    if (role === 'TUTOR') {
+      window.location.href = `/tutor-profile?userId=${currentUser.id}`;
+    } else {
+      window.location.href = `/tutee-profile?userId=${currentUser.id}`;
+    }
+  }
+
+  function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('currentUser');
+      currentUser = null;
+      window.location.href = '/logout';
+    }
+  }
+
+  // UTILITY FUNCTIONS
+  function showAlert(message, type = 'info') {
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+
+    const mainContent = document.querySelector('.main-content');
+    mainContent.insertBefore(alert, mainContent.firstChild);
+
+    setTimeout(() => alert.remove(), 5000);
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('userDropdownMenu');
+    const button = document.querySelector('.user-menu-btn');
+
+    if (dropdown && button && !button.contains(event.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+
+  // API Helper Functions
+  async function apiCall(endpoint, options = {}) {
+    try {
+      const response = await fetch(`${API_BASE}${endpoint}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers
+        },
+        ...options
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('API Error:', error);
+      showAlert('An error occurred. Please try again.', 'error');
+      throw error;
+    }
+  }
+</script>
+</body>
+</html>

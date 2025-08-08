@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Qiwi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #3d3f5c;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .register-container {
+      background: white;
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      max-width: 450px;
+      width: 100%;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Back to home link moved to top */
+    .back-home {
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .back-link {
+      color: #4a5568;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      color: #f4d1ae;
+      background: rgba(244, 209, 174, 0.08);
+      text-decoration: none;
+      transform: translateX(-2px);
+    }
+
+    /* Hero Badge */
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(244, 209, 174, 0.15) 0%, rgba(244, 209, 174, 0.25) 100%);
+      color: #8b5a2b;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(244, 209, 174, 0.3);
+    }
+
+    .logo {
+      color: #f4d1ae;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+    }
+
+    .register-container h1 {
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: #4a5568;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #fafbfc;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #f4d1ae;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(244, 209, 174, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* ROLE SELECTION STYLING */
+    .role-selection {
+      margin: 2rem 0;
+    }
+
+    .role-selection h3 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #2d3748;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .role-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .role-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #fafbfc;
+      position: relative;
+    }
+
+    .role-card:hover {
+      border-color: #f4d1ae;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(244, 209, 174, 0.15);
+    }
+
+    .role-card.selected {
+      border-color: #f4d1ae;
+      background: rgba(244, 209, 174, 0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(244, 209, 174, 0.2);
+    }
+
+    .role-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .role-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+      color: #3d3f5c;
+    }
+
+    .role-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #2d3748;
+    }
+
+    .role-subtitle {
+      font-size: 0.9rem;
+      color: #f4d1ae;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .role-description {
+      color: #4a5568;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .role-examples {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      margin-top: 0.2rem;
+      width: 16px;
+      height: 16px;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #4a5568;
+    }
+
+    .checkbox-group a {
+      color: #3d3f5c;
+      font-weight: 600;
+    }
+
+    .checkbox-group a:hover {
+      color: #f4d1ae;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3d3f5c 0%, #4a4d6b 100%);
+      color: white;
+      box-shadow: 0 6px 20px rgba(61, 63, 92, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(61, 63, 92, 0.4);
+    }
+
+    .btn:disabled {
+      background-color: #d1d5db;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 2rem;
+      color: #4a5568;
+      font-size: 0.95rem;
+    }
+
+    .login-link a {
+      color: #3d3f5c;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .login-link a:hover {
+      color: #f4d1ae;
+      text-decoration: underline;
+    }
+
+    .alert {
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      border-left: 4px solid;
+    }
+
+    .alert-success {
+      background: #f0fdf4;
+      color: #166534;
+      border-left-color: #22c55e;
+    }
+
+    .alert-error {
+      background: #fef2f2;
+      color: #991b1b;
+      border-left-color: #ef4444;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 3px solid rgba(244, 209, 174, 0.3);
+      border-top: 3px solid #f4d1ae;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading p {
+      margin-top: 1rem;
+      color: #4a5568;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .register-container {
+        padding: 2rem;
+        margin: 1rem;
+      }
+
+      .logo {
+        font-size: 2rem;
+      }
+
+      .register-container h1 {
+        font-size: 1.6rem;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+      }
+
+      .role-card {
+        padding: 1.25rem;
+      }
+
+      .role-icon {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .register-container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="register-container">
+  <div class="logo-section">
+    <!-- Back to home link moved to top -->
+    <div class="back-home">
+      <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <div class="hero-badge">For University Students</div>
+    <div class="logo">Qiwi</div>
+    <h1>Get Started</h1>
+    <p class="subtitle">Connect with fellow students for academic success</p>
+  </div>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Creating your account...</p>
+  </div>
+
+  <form id="registerForm">
+    <div class="form-group">
+      <label for="name">Full Name *</label>
+      <input type="text" id="name" name="name" class="form-control"
+             placeholder="Enter your full name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">University Email Address *</label>
+      <input type="email" id="email" name="email" class="form-control"
+             placeholder="your.email@university.edu" required>
+    </div>
+
+    <div class="form-group">
+      <label for="major">Your Major *</label>
+      <select id="major" name="major" class="form-control" required>
+        <option value="">Select your major</option>
+        <option th:each="major : ${majors}"
+                th:value="${major}"
+                th:text="${major.displayName}"></option>
+      </select>
+    </div>
+
+    <!-- CLEAR ROLE SELECTION -->
+    <div class="role-selection">
+      <h3>What do you want to do on Qiwi? *</h3>
+
+      <div class="role-options">
+        <!-- STUDENT OPTION -->
+        <div class="role-card" onclick="selectRole('TUTEE')" id="tutee-card">
+          <input type="radio" name="role" value="TUTEE" id="role-tutee">
+          <div class="role-icon"></div>
+          <div class="role-title">I'm a Student</div>
+        </div>
+
+        <!-- TUTOR OPTION -->
+        <div class="role-card" onclick="selectRole('TUTOR')" id="tutor-card">
+          <input type="radio" name="role" value="TUTOR" id="role-tutor">
+          <div class="role-icon"></div>
+          <div class="role-title">I'm a Tutor</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="termsAccepted" name="termsAccepted" required>
+      <label for="termsAccepted">I accept the <a href="/terms" target="_blank">Terms of Service</a> *</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="privacyAccepted" name="privacyAccepted" required>
+      <label for="privacyAccepted">I accept the <a href="/privacy" target="_blank">Privacy Policy</a> *</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create My Account</button>
+  </form>
+
+  <div class="login-link">
+    Already have an account? <a href="/login">Sign in here</a>
+  </div>
+</div>
+
+<script>
+  const API_BASE = '/api';
+  let selectedRole = null;
+
+  function selectRole(role) {
+    selectedRole = role;
+
+    // Remove previous selection
+    document.querySelectorAll('.role-card').forEach(card => {
+      card.classList.remove('selected');
+    });
+
+    // Add selection to clicked card
+    const cardId = role === 'TUTOR' ? 'tutor-card' : 'tutee-card';
+    document.getElementById(cardId).classList.add('selected');
+
+    // Update radio button
+    document.getElementById(`role-${role.toLowerCase()}`).checked = true;
+  }
+
+  function showLoading() {
+    document.getElementById('loading').style.display = 'block';
+  }
+
+  function hideLoading() {
+    document.getElementById('loading').style.display = 'none';
+  }
+
+  function showAlert(message, type = 'error') {
+    const existingAlert = document.querySelector('.alert');
+    if (existingAlert) {
+      existingAlert.remove();
+    }
+
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.textContent = message;
+
+    const form = document.getElementById('registerForm');
+    form.parentNode.insertBefore(alertDiv, form);
+  }
+
+  // Registration form handler
+  document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      major: formData.get('major'),
+      role: selectedRole,
+      termsAccepted: formData.get('termsAccepted') === 'on',
+      privacyAccepted: formData.get('privacyAccepted') === 'on'
+    };
+
+    // Validation
+    if (!data.name || !data.email || !data.major || !selectedRole) {
+      showAlert('Please fill in all required fields and select your role');
+      return;
+    }
+
+    if (!data.termsAccepted || !data.privacyAccepted) {
+      showAlert('Please accept the Terms of Service and Privacy Policy');
+      return;
+    }
+
+    showLoading();
+
+    try {
+      const response = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      hideLoading();
+
+      if (response.ok) {
+        const user = await response.json();
+
+        showAlert('Account created successfully! Redirecting...', 'success');
+
+        // Store user info
+        localStorage.setItem('currentUser', JSON.stringify(user));
+
+        // Redirect based on role
+        setTimeout(() => {
+          if (user.role === 'TUTOR') {
+            window.location.href = `/tutor-profile?userId=${user.id}`;
+          } else {
+            window.location.href = `/tutee-profile?userId=${user.id}`;
+          }
+        }, 2000);
+      } else {
+        const errorText = await response.text();
+        showAlert(errorText || 'Registration failed. Please try again.');
+      }
+    } catch (error) {
+      hideLoading();
+      console.error('Registration error:', error);
+      showAlert('An error occurred. Please try again.');
+    }
+  });
+
+  // Email validation for university domains
+  document.getElementById('email').addEventListener('blur', function() {
+    const email = this.value;
+    const universityDomains = ['.edu', '.ac.', 'university', 'college'];
+
+    if (email && !universityDomains.some(domain => email.includes(domain))) {
+      showAlert('Please use your university email address', 'error');
+    }
+  });
+</script>
+</body>
+</html>

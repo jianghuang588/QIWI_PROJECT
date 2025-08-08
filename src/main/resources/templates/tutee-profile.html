@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile - Qiwi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #3d3f5c;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            font-weight: 400;
+        }
+
+        /* SMOOTH ANIMATIONS */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar {
+            background: #3d3f5c;
+            padding: 1.25rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            border-bottom: 1px solid rgba(244, 209, 174, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            color: #f4d1ae;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(244, 209, 174, 0.9);
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(244, 209, 174, 0.15);
+            color: #f4d1ae;
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            background-color: rgba(244, 209, 174, 0.2);
+            color: #f4d1ae;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-role-badge {
+            background: rgba(244, 209, 174, 0.2);
+            color: #f4d1ae;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(244, 209, 174, 0.9);
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-menu-btn {
+            background: rgba(244, 209, 174, 0.1);
+            border: 1px solid rgba(244, 209, 174, 0.25);
+            color: #f4d1ae;
+            padding: 0.6rem 1.25rem;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .user-menu-btn:hover {
+            background: rgba(244, 209, 174, 0.15);
+            border-color: rgba(244, 209, 174, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .user-initial {
+            background: #f4d1ae;
+            color: #3d3f5c;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+            margin-top: 0.5rem;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .user-dropdown-menu.show {
+            display: block;
+            animation: dropdownFadeIn 0.2s ease;
+        }
+
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 0.875rem 1.25rem;
+            color: #374151;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: #f9fafb;
+            padding-left: 1.5rem;
+        }
+
+        .user-dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .logout-link {
+            color: #dc2626 !important;
+            font-weight: 500;
+        }
+
+        .logout-link:hover {
+            background: #fef2f2 !important;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .profile-header {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .profile-header .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #3d3f5c;
+        }
+
+        .profile-header h1 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .profile-header p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+            color: #2d3748;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #cbd5e0;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(203, 213, 224, 0.1);
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .subject-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .subject-item:hover {
+            border-color: #cbd5e0;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .subject-item.selected {
+            border-color: #cbd5e0;
+            background: #f8f9fa;
+        }
+
+        .subject-item input[type="checkbox"] {
+            margin: 0;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .subject-item label {
+            margin: 0;
+            font-weight: 500;
+            color: #374151;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary {
+            background: #3d3f5c;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2d2f3c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(61, 63, 92, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f9fafb;
+            color: #4a5568;
+            border: 1px solid #e5e7eb;
+            margin-right: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: #f3f4f6;
+            color: #374151;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            border-color: #cbd5e0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3d3f5c;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .help-text {
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #2d3748;
+            color: rgba(244, 209, 174, 0.8);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            color: rgba(244, 209, 174, 0.8);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(244, 209, 174, 0.9);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f4d1ae;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 1.5rem;
+            }
+
+            .container {
+                padding: 2rem 20px;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .form-card {
+                padding: 1.5rem;
+            }
+
+            .profile-header {
+                padding: 1.5rem;
+            }
+
+            .user-section {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="logo">Qiwi</a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" id="dashboardLink">Dashboard</a></li>
+            <li><a href="#" id="tuteeProfileLink" class="active">My Profile</a></li>
+            <li><a href="#" id="browseTutorsLink">Find Tutors</a></li>
+            <li><a href="#" id="messagesLink">Messages</a></li>
+        </ul>
+
+        <!-- User Info -->
+        <div class="user-section" id="userSection">
+            <span class="user-role-badge" id="userRoleBadge">Student</span>
+            <div class="user-info">
+                <div class="user-dropdown">
+                    <button class="user-menu-btn" onclick="toggleUserMenu()">
+                        <div class="user-initial" id="userInitial">U</div>
+                        <span id="userName">User</span>
+                    </button>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <a href="#" onclick="editProfile()" id="profileLink">Edit Profile</a>
+                        <a href="#" onclick="logout()" class="logout-link">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="profile-header">
+        <h1>My Student Profile</h1>
+        <p>Manage your learning preferences and let tutors know how they can help you succeed</p>
+    </div>
+
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Saving your profile...</p>
+    </div>
+
+    <div class="form-card">
+        <form id="tuteeProfileForm">
+            <div class="form-group">
+                <label for="subjectsNeeded">Subjects You Need Help With *</label>
+                <div class="help-text">Select all subjects where you would like tutoring support</div>
+                <div class="subjects-grid" id="subjectsGrid">
+                    <!-- Subjects will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="personalIntro">Personal Introduction *</label>
+                <div class="help-text">Introduce yourself to potential tutors. What are your learning goals? What challenges are you facing? (max 500 characters)</div>
+                <textarea id="personalIntro" name="personalIntro" class="form-control"
+                          rows="5" maxlength="500" required
+                          placeholder="Example: Hi! I'm a second-year Business Engineering student struggling with Corporate Finance. I'm a visual learner who understands better with practical examples. Looking for patient tutors who can help me prepare for my upcoming exam. I'm motivated to improve and willing to put in the work!"></textarea>
+                <div class="help-text">
+                    <span id="charCount">0</span>/500 characters
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="goBack()">Back to Dashboard</button>
+                <button type="submit" class="btn btn-primary">Save Profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-links">
+            <a href="/about">About Qiwi</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="https://www.linkedin.com/company/qiwiedu/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:support@qiwi.com">Email Us</a>
+        </div>
+        <p class="footer-text">© 2024 Qiwi. Connecting university students through peer tutoring.</p>
+    </div>
+</footer>
+
+<script th:inline="javascript">
+    const userId = /*[[${userId}]]*/ '';
+    const subjects = /*[[${subjects}]]*/ [];
+    const API_BASE = '/api';
+    let currentUser = null;
+    let selectedSubjects = [];
+
+    // Initialize form
+    window.addEventListener('load', function() {
+        console.log('Tutee profile loading with userId:', userId);
+
+        if (!userId) {
+            console.log('No userId found, redirecting to login');
+            window.location.href = '/login';
+            return;
+        }
+
+        // Load user data and update navigation
+        loadUserData();
+        updateNavigation();
+
+        // Initialize form
+        populateSubjects();
+        setupCharacterCounter();
+        loadExistingProfile();
+    });
+
+    function loadUserData() {
+        try {
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                console.log('Loaded user from localStorage:', currentUser);
+            } else if (userId) {
+                // Create user object from page data
+                currentUser = {
+                    id: userId,
+                    name: 'Student',
+                    role: 'TUTEE'
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                console.log('Created user object:', currentUser);
+            }
+        } catch (error) {
+            console.error('Error loading user data:', error);
+        }
+    }
+
+    function updateNavigation() {
+        if (!currentUser) {
+            console.error('No current user for navigation update');
+            return;
+        }
+
+        console.log('Updating navigation links');
+
+        const dashboardLink = document.getElementById('dashboardLink');
+        const browseTutorsLink = document.getElementById('browseTutorsLink');
+        const tuteeProfileLink = document.getElementById('tuteeProfileLink');
+        const messagesLink = document.getElementById('messagesLink');
+
+        if (dashboardLink) {
+            dashboardLink.href = `/dashboard?userId=${currentUser.id}&role=${currentUser.role || 'TUTEE'}`;
+            dashboardLink.onclick = (e) => {
+                e.preventDefault();
+                navigateTo(`/dashboard?userId=${currentUser.id}&role=${currentUser.role || 'TUTEE'}`);
+            };
+        }
+
+        if (browseTutorsLink) {
+            browseTutorsLink.href = `/browse-tutors?userId=${currentUser.id}`;
+            browseTutorsLink.onclick = (e) => {
+                e.preventDefault();
+                navigateTo(`/browse-tutors?userId=${currentUser.id}`);
+            };
+        }
+
+        if (tuteeProfileLink) {
+            tuteeProfileLink.href = `/tutee-profile?userId=${currentUser.id}`;
+            tuteeProfileLink.onclick = (e) => {
+                e.preventDefault();
+                navigateTo(`/tutee-profile?userId=${currentUser.id}`);
+            };
+        }
+
+        if (messagesLink) {
+            messagesLink.href = `/messages?userId=${currentUser.id}`;
+            messagesLink.onclick = (e) => {
+                e.preventDefault();
+                navigateTo(`/messages?userId=${currentUser.id}`);
+            };
+        }
+
+        // Update user display
+        updateUserDisplay();
+
+        console.log('Navigation links updated successfully');
+    }
+
+    function updateUserDisplay() {
+        if (!currentUser) return;
+
+        const userName = document.getElementById('userName');
+        const userInitial = document.getElementById('userInitial');
+        const userRoleBadge = document.getElementById('userRoleBadge');
+
+        if (userName) {
+            userName.textContent = currentUser.name || 'Student';
+        }
+
+        if (userInitial) {
+            userInitial.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+        }
+
+        if (userRoleBadge) {
+            userRoleBadge.textContent = currentUser.role === 'TUTOR' ? 'Tutor' : 'Student';
+        }
+    }
+
+    function navigateTo(url) {
+        console.log('Navigating to:', url);
+        window.location.href = url;
+    }
+
+    function populateSubjects() {
+        const grid = document.getElementById('subjectsGrid');
+        grid.innerHTML = subjects.map(subject => `
+                <div class="subject-item" onclick="clickSubjectItem('${subject}')">
+                    <input type="checkbox" id="subject_${subject}" value="${subject}"
+                           onchange="toggleSubject('${subject}')" onclick="event.stopPropagation()">
+                    <label for="subject_${subject}">${subject.replace(/_/g, ' ')}</label>
+                </div>
+            `).join('');
+    }
+
+    function clickSubjectItem(subject) {
+        const checkbox = document.getElementById(`subject_${subject}`);
+        checkbox.checked = !checkbox.checked;
+        toggleSubject(subject);
+    }
+
+    function toggleSubject(subject) {
+        const checkbox = document.getElementById(`subject_${subject}`);
+        const subjectItem = checkbox.closest('.subject-item');
+
+        if (checkbox.checked) {
+            if (!selectedSubjects.includes(subject)) {
+                selectedSubjects.push(subject);
+            }
+            subjectItem.classList.add('selected');
+        } else {
+            selectedSubjects = selectedSubjects.filter(s => s !== subject);
+            subjectItem.classList.remove('selected');
+        }
+    }
+
+    function setupCharacterCounter() {
+        const textarea = document.getElementById('personalIntro');
+        const counter = document.getElementById('charCount');
+
+        textarea.addEventListener('input', function() {
+            counter.textContent = this.value.length;
+        });
+    }
+
+    async function loadExistingProfile() {
+        try {
+            const response = await fetch(`${API_BASE}/tutees/user/${userId}`);
+            if (response.ok) {
+                const existingProfile = await response.json();
+
+                // Set subjects
+                if (existingProfile.subjectsNeeded) {
+                    existingProfile.subjectsNeeded.forEach(subject => {
+                        const checkbox = document.getElementById(`subject_${subject}`);
+                        if (checkbox) {
+                            checkbox.checked = true;
+                            selectedSubjects.push(subject);
+                            checkbox.closest('.subject-item').classList.add('selected');
+                        }
+                    });
+                }
+
+                // Set personal intro
+                if (existingProfile.personalIntro) {
+                    document.getElementById('personalIntro').value = existingProfile.personalIntro;
+                    document.getElementById('charCount').textContent = existingProfile.personalIntro.length;
+                }
+
+                console.log('Loaded existing profile data');
+            }
+        } catch (error) {
+            console.error('Error loading profile:', error);
+        }
+    }
+
+    // Form submission
+    document.getElementById('tuteeProfileForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const personalIntro = document.getElementById('personalIntro').value;
+
+        if (selectedSubjects.length === 0) {
+            showAlert('Please select at least one subject you need help with', 'error');
+            return;
+        }
+
+        if (!personalIntro.trim()) {
+            showAlert('Please write a personal introduction', 'error');
+            return;
+        }
+
+        const profileData = {
+            userId: parseInt(userId),
+            subjectsNeeded: selectedSubjects,
+            personalIntro: personalIntro.trim()
+        };
+
+        showLoading();
+
+        try {
+            const response = await fetch(`${API_BASE}/tutees`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(profileData)
+            });
+
+            hideLoading();
+
+            if (response.ok) {
+                // Update stored user role
+                if (currentUser) {
+                    currentUser.role = 'TUTEE';
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                }
+
+                // Just stay on the page - no alert or redirect
+                console.log('Profile saved successfully');
+
+            } else {
+                const errorText = await response.text();
+                showAlert(errorText || 'Failed to save profile. Please try again.', 'error');
+            }
+        } catch (error) {
+            hideLoading();
+            console.error('Error saving profile:', error);
+            showAlert('An error occurred. Please try again.', 'error');
+        }
+    });
+
+    function showLoading() {
+        document.getElementById('loading').style.display = 'block';
+    }
+
+    function hideLoading() {
+        document.getElementById('loading').style.display = 'none';
+    }
+
+    function showAlert(message, type = 'error') {
+        // Remove existing alerts
+        const existingAlert = document.querySelector('.alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type}`;
+        alertDiv.textContent = message;
+
+        const container = document.querySelector('.container');
+        container.insertBefore(alertDiv, container.children[1]);
+
+        // Auto-remove error alerts after 5 seconds
+        if (type === 'error') {
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+    }
+
+    function goBack() {
+        if (currentUser) {
+            navigateTo(`/dashboard?userId=${currentUser.id}&role=${currentUser.role || 'TUTEE'}`);
+        } else {
+            navigateTo(`/dashboard?userId=${userId}`);
+        }
+    }
+
+    function editProfile() {
+        if (!currentUser) return;
+
+        if (currentUser.role === 'TUTOR') {
+            navigateTo(`/tutor-profile?userId=${currentUser.id}`);
+        } else {
+            navigateTo(`/tutee-profile?userId=${currentUser.id}`);
+        }
+    }
+
+    // User Menu Functions
+    function toggleUserMenu() {
+        const dropdown = document.getElementById('userDropdownMenu');
+        if (dropdown) {
+            dropdown.classList.toggle('show');
+        }
+    }
+
+    function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            console.log('User logged out from tutee profile');
+            window.location.href = '/';
+        }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('userDropdownMenu');
+        const button = document.querySelector('.user-menu-btn');
+
+        if (dropdown && button && !button.contains(event.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+
+    // Add backup navigation handlers
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, setting up backup navigation handlers');
+
+        // Backup handlers for navigation links
+        const navLinks = [
+            { id: 'dashboardLink', url: () => `/dashboard?userId=${userId}&role=${currentUser?.role || 'TUTEE'}` },
+            { id: 'browseTutorsLink', url: () => `/browse-tutors?userId=${userId}` },
+            { id: 'tuteeProfileLink', url: () => `/tutee-profile?userId=${userId}` },
+            { id: 'messagesLink', url: () => `/messages?userId=${userId}` }
+        ];
+
+        navLinks.forEach(({ id, url }) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const targetUrl = url();
+                    console.log(`Backup navigation for ${id}:`, targetUrl);
+                    window.location.href = targetUrl;
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

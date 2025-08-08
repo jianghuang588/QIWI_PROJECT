@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Students - Qiwi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #3d3f5c;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            font-weight: 400;
+        }
+
+        /* SMOOTH ANIMATIONS */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar {
+            background: #3d3f5c;
+            padding: 1.25rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            border-bottom: 1px solid rgba(244, 209, 174, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            color: #f4d1ae;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(244, 209, 174, 0.9);
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(244, 209, 174, 0.15);
+            color: #f4d1ae;
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            background-color: rgba(244, 209, 174, 0.2);
+            color: #f4d1ae;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-role-badge {
+            background: rgba(244, 209, 174, 0.2);
+            color: #f4d1ae;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(244, 209, 174, 0.9);
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-menu-btn {
+            background: rgba(244, 209, 174, 0.1);
+            border: 1px solid rgba(244, 209, 174, 0.25);
+            color: #f4d1ae;
+            padding: 0.6rem 1.25rem;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .user-menu-btn:hover {
+            background: rgba(244, 209, 174, 0.15);
+            border-color: rgba(244, 209, 174, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .user-initial {
+            background: #f4d1ae;
+            color: #3d3f5c;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+            margin-top: 0.5rem;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .user-dropdown-menu.show {
+            display: block;
+            animation: dropdownFadeIn 0.2s ease;
+        }
+
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 0.875rem 1.25rem;
+            color: #374151;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: #f9fafb;
+            padding-left: 1.5rem;
+        }
+
+        .user-dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .logout-link {
+            color: #dc2626 !important;
+            font-weight: 500;
+        }
+
+        .logout-link:hover {
+            background: #fef2f2 !important;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .page-header h1 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .filters-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.95rem;
+        }
+
+        .filter-control {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+            color: #2d3748;
+        }
+
+        .filter-control:focus {
+            outline: none;
+            border-color: #cbd5e0;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(203, 213, 224, 0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary {
+            background: #3d3f5c;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2d2f3c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(61, 63, 92, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f9fafb;
+            color: #4a5568;
+            border: 1px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background: #f3f4f6;
+            color: #374151;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            border-color: #cbd5e0;
+        }
+
+        .tutees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .tutee-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .tutee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .tutee-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tutee-avatar {
+            width: 60px;
+            height: 60px;
+            background: #3d3f5c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .tutee-info h3 {
+            color: #2d3748;
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .tutee-info .major {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .tutee-subjects {
+            margin-bottom: 1rem;
+        }
+
+        .tutee-subjects h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .subjects-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .subject-tag {
+            background: rgba(61, 63, 92, 0.1);
+            color: #3d3f5c;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .tutee-intro {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tutee-intro h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .intro-text {
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            max-height: 4.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .tutee-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .contact-btn {
+            width: 100%;
+            background: #3d3f5c;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            letter-spacing: -0.01em;
+        }
+
+        .contact-btn:hover {
+            background: #2d2f3c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(61, 63, 92, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #4a5568;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+            color: #9ca3af;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3d3f5c;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-count {
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #2d3748;
+            color: rgba(244, 209, 174, 0.8);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            color: rgba(244, 209, 174, 0.8);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(244, 209, 174, 0.9);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f4d1ae;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 1.5rem;
+            }
+
+            .container {
+                padding: 2rem 20px;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tutees-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tutee-actions {
+                flex-direction: column;
+            }
+
+            .user-section {
+                gap: 1rem;
+            }
+
+            .page-header {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="logo">Qiwi</a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" id="dashboardLink">Dashboard</a></li>
+            <li><a href="#" id="profileNavLink">My Profile</a></li>
+            <li><a href="#" id="browseTuteesLink" class="active">Find Students</a></li>
+            <li><a href="#" id="messagesLink">Messages</a></li>
+        </ul>
+
+        <!-- User Info -->
+        <div class="user-section" id="userSection">
+            <span class="user-role-badge" id="userRoleBadge">Tutor</span>
+            <div class="user-info">
+                <div class="user-dropdown">
+                    <button class="user-menu-btn" onclick="toggleUserMenu()">
+                        <div class="user-initial" id="userInitial">T</div>
+                        <span id="userName">User</span>
+                    </button>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <a href="#" onclick="editProfile()" id="profileLink">Edit Profile</a>
+                        <a href="#" onclick="logout()" class="logout-link">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Find Students to Help</h1>
+        <p>Connect with students who need help in subjects you excel at</p>
+    </div>
+
+    <div class="filters-section">
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label for="majorFilter">Filter by Major</label>
+                <select id="majorFilter" class="filter-control">
+                    <option value="">All Majors</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="subjectFilter">Filter by Subject</label>
+                <select id="subjectFilter" class="filter-control">
+                    <option value="">All Subjects</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>&nbsp;</label>
+                <button class="btn btn-primary" onclick="applyFilters()">Search</button>
+            </div>
+            <div class="filter-group">
+                <label>&nbsp;</label>
+                <button class="btn btn-secondary" onclick="clearFilters()">Clear Filters</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-header">
+        <div class="results-count" id="resultsCount"></div>
+    </div>
+
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Finding students...</p>
+    </div>
+
+    <div class="tutees-grid" id="tuteesGrid">
+        <!-- Students will be populated by JavaScript -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-links">
+            <a href="/about">About Qiwi</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="https://www.linkedin.com/company/qiwiedu/posts/?feedView=all" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:support@qiwi.com">Email Us</a>
+        </div>
+        <p class="footer-text">© 2024 Qiwi. Connecting university students through peer tutoring.</p>
+    </div>
+</footer>
+
+<script th:inline="javascript">
+    const userId = /*[[${userId}]]*/ '';
+    const API_BASE = '/api';
+    let currentUser = null;
+    let allTutees = [];
+    let filteredTutees = [];
+
+    // Initialize page
+    window.addEventListener('load', function() {
+        console.log('Browse tutees loading with userId:', userId);
+
+        if (!userId) {
+            console.log('No userId found, redirecting to login');
+            window.location.href = '/login';
+            return;
+        }
+
+        // Load user data and update navigation
+        loadUserData();
+        updateNavigation();
+
+        // Load tutees
+        loadTutees();
+    });
+
+    function loadUserData() {
+        try {
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                console.log('Loaded user from localStorage:', currentUser);
+            } else if (userId) {
+                // Create user object from page data
+                currentUser = {
+                    id: userId,
+                    name: 'Tutor',
+                    role: 'TUTOR'
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                console.log('Created user object:', currentUser);
+            }
+        } catch (error) {
+            console.error('Error loading user data:', error);
+        }
+    }
+
+    function updateNavigation() {
+        if (!currentUser) {
+            console.error('No current user for navigation update');
+            return;
+        }
+
+        console.log('Updating navigation links');
+
+        const dashboardLink = document.getElementById('dashboardLink');
+        const browseTuteesLink = document.getElementById('browseTuteesLink');
+        const profileNavLink = document.getElementById('profileNavLink');
+        const messagesLink = document.getElementById('messagesLink');
+
+        if (dashboardLink) {
+            dashboardLink.href = `/dashboard?userId=${currentUser.id}&role=${currentUser.role || 'TUTOR'}`;
+            dashboardLink.onclick = (e) => {
+                e.preventDefault();
+                navigateTo(`/dashboard?userId=${currentUser.id}&role=${currentUser.role || 'TUTOR'}`);
+            };
+            console.log('Dashboard link:', dashboardLink.href);
+        }
+
+        if (browseTuteesLink) {
+            browseTuteesLink.href = `/browse-tutees?userId=${currentUser.id}`;
+            browseTuteesLink.onclick = (e) => {
+                e.preventDefault();
+                navigateTo(`/browse-tutees?userId=${currentUser.id}`);
+            };
+            console.log('Browse tutees link:', browseTuteesLink.href);
+        }
+
+        if (profileNavLink) {
+            profileNavLink.textContent = 'My Profile';
+            if (currentUser.role === 'TUTOR') {
+                profileNavLink.href = `/tutor-profile?userId=${currentUser.id}`;
+                profileNavLink.onclick = (e) => {
+                    e.preventDefault();
+                    navigateTo(`/tutor-profile?userId=${currentUser.id}`);
+                };
+            } else {
+                profileNavLink.href = `/tutee-profile?userId=${currentUser.id}`;
+                profileNavLink.onclick = (e) => {
+                    e.preventDefault();
+                    navigateTo(`/tutee-profile?userId=${currentUser.id}`);
+                };
+            }
+            console.log('Profile link:', profileNavLink.href);
+        }
+
+        if (messagesLink) {
+            messagesLink.href = `/messages?userId=${currentUser.id}`;
+            messagesLink.onclick = (e) => {
+                e.preventDefault();
+                navigateTo(`/messages?userId=${currentUser.id}`);
+            };
+            console.log('Messages link:', messagesLink.href);
+        }
+
+        // Update user display
+        updateUserDisplay();
+
+        console.log('Navigation links updated successfully');
+    }
+
+    function updateUserDisplay() {
+        if (!currentUser) return;
+
+        const userName = document.getElementById('userName');
+        const userInitial = document.getElementById('userInitial');
+        const userRoleBadge = document.getElementById('userRoleBadge');
+        const profileLink = document.getElementById('profileLink');
+
+        if (userName) {
+            userName.textContent = currentUser.name || 'Tutor';
+        }
+
+        if (userInitial) {
+            userInitial.textContent = (currentUser.name || 'T').charAt(0).toUpperCase();
+        }
+
+        if (userRoleBadge) {
+            userRoleBadge.textContent = 'Tutor';
+        }
+
+        if (profileLink) {
+            profileLink.href = `/tutor-profile?userId=${currentUser.id}`;
+        }
+    }
+
+    function navigateTo(url) {
+        console.log('Navigating to:', url);
+        window.location.href = url;
+    }
+
+    async function loadTutees() {
+        showLoading();
+
+        try {
+            const response = await fetch(`${API_BASE}/tutees`);
+            if (response.ok) {
+                allTutees = await response.json();
+
+                console.log('Loaded tutees:', allTutees.length);
+                console.log('Sample tutee structure:', allTutees[0]);
+
+                filteredTutees = [...allTutees];
+                displayTutees(filteredTutees);
+                updateResultsCount();
+
+                // Populate filter options based on actual data
+                populateFilterOptions();
+            } else {
+                showEmptyState('Failed to load students. Please refresh the page.');
+            }
+        } catch (error) {
+            console.error('Error loading tutees:', error);
+            showEmptyState('An error occurred while loading students. Please try again.');
+        } finally {
+            hideLoading();
+        }
+    }
+
+    function populateFilterOptions() {
+        // Get unique majors from tutees
+        const uniqueMajors = [...new Set(allTutees.map(tutee => tutee.user.major))];
+        const majorFilter = document.getElementById('majorFilter');
+
+        // Clear existing options except "All Majors"
+        majorFilter.innerHTML = '<option value="">All Majors</option>';
+        uniqueMajors.forEach(major => {
+            if (major) {
+                const option = document.createElement('option');
+                option.value = major;
+                option.textContent = major.replace(/_/g, ' ');
+                majorFilter.appendChild(option);
+            }
+        });
+
+        // Get unique subjects from tutees
+        const uniqueSubjects = [...new Set(allTutees.flatMap(tutee => tutee.subjectsNeeded || []))];
+        const subjectFilter = document.getElementById('subjectFilter');
+
+        // Clear existing options except "All Subjects"
+        subjectFilter.innerHTML = '<option value="">All Subjects</option>';
+        uniqueSubjects.forEach(subject => {
+            if (subject) {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject.replace(/_/g, ' ');
+                subjectFilter.appendChild(option);
+            }
+        });
+
+        console.log('Filter options populated:', { uniqueMajors, uniqueSubjects });
+    }
+
+    function displayTutees(tutees) {
+        const grid = document.getElementById('tuteesGrid');
+
+        if (tutees.length === 0) {
+            showEmptyState('No students found matching your criteria. Try adjusting your filters.');
+            return;
+        }
+
+        grid.innerHTML = tutees.map(tutee => `
+                <div class="tutee-card">
+                    <div class="tutee-header">
+                        <div class="tutee-avatar">
+                            ${tutee.user.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="tutee-info">
+                            <h3>${tutee.user.name}</h3>
+                            <div class="major">${tutee.user.major.replace(/_/g, ' ')}</div>
+                        </div>
+                    </div>
+
+                    <div class="tutee-subjects">
+                        <h4>Needs Help With</h4>
+                        <div class="subjects-list">
+                            ${(tutee.subjectsNeeded || []).map(subject =>
+            `<span class="subject-tag">${subject.replace(/_/g, ' ')}</span>`
+        ).join('')}
+                        </div>
+                    </div>
+
+                    <div class="tutee-intro">
+                        <h4>About This Student</h4>
+                        <div class="intro-text">
+                            ${tutee.personalIntro || 'No introduction provided yet.'}
+                        </div>
+                    </div>
+
+                    <div class="tutee-actions">
+                        <button class="contact-btn" onclick="contactTutee('${tutee.user.id}', '${tutee.user.name}')">
+                            Contact ${tutee.user.name}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+    }
+
+    function showEmptyState(message) {
+        const grid = document.getElementById('tuteesGrid');
+        grid.innerHTML = `
+                <div class="empty-state">
+                    <div class="icon">Search</div>
+                    <h3>No Students Found</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+    }
+
+    function applyFilters() {
+        const majorFilter = document.getElementById('majorFilter').value;
+        const subjectFilter = document.getElementById('subjectFilter').value;
+
+        console.log('Applying filters:', { majorFilter, subjectFilter });
+
+        filteredTutees = allTutees.filter(tutee => {
+            // Major filter - check if student's major matches or no filter selected
+            const majorMatch = !majorFilter || tutee.user.major === majorFilter;
+
+            // Subject filter - check if student needs help in this subject or no filter selected
+            const subjectMatch = !subjectFilter || (tutee.subjectsNeeded && tutee.subjectsNeeded.includes(subjectFilter));
+
+            console.log(`Student ${tutee.user.name}:`, {
+                studentMajor: tutee.user.major,
+                majorMatch,
+                studentSubjects: tutee.subjectsNeeded,
+                subjectMatch,
+                overallMatch: majorMatch && subjectMatch
+            });
+
+            return majorMatch && subjectMatch;
+        });
+
+        console.log(`Filtered ${filteredTutees.length} students from ${allTutees.length} total`);
+        displayTutees(filteredTutees);
+        updateResultsCount();
+    }
+
+    function clearFilters() {
+        document.getElementById('majorFilter').value = '';
+        document.getElementById('subjectFilter').value = '';
+        filteredTutees = [...allTutees];
+        displayTutees(filteredTutees);
+        updateResultsCount();
+        console.log('Filters cleared, showing all students');
+    }
+
+    function updateResultsCount() {
+        const count = filteredTutees.length;
+        const countElement = document.getElementById('resultsCount');
+        countElement.textContent = '';
+    }
+
+    function contactTutee(tuteeId, tuteeName) {
+        console.log('Contacting student:', tuteeName, 'ID:', tuteeId);
+        if (!currentUser) {
+            console.error('No current user for contact');
+            return;
+        }
+
+        const messagesUrl = `/messages?userId=${currentUser.id}&contactId=${tuteeId}&contactName=${encodeURIComponent(tuteeName)}`;
+        console.log('Navigating to messages:', messagesUrl);
+        window.location.href = messagesUrl;
+    }
+
+    // User Menu Functions
+    function editProfile() {
+        if (!currentUser) return;
+        navigateTo(`/tutor-profile?userId=${currentUser.id}`);
+    }
+
+    function toggleUserMenu() {
+        const dropdown = document.getElementById('userDropdownMenu');
+        if (dropdown) {
+            dropdown.classList.toggle('show');
+        }
+    }
+
+    function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            console.log('User logged out from browse tutees');
+            window.location.href = '/';
+        }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('userDropdownMenu');
+        const button = document.querySelector('.user-menu-btn');
+
+        if (dropdown && button && !button.contains(event.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+
+    function showLoading() {
+        document.getElementById('loading').style.display = 'block';
+    }
+
+    function hideLoading() {
+        document.getElementById('loading').style.display = 'none';
+    }
+
+    // Add backup navigation handlers
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, setting up backup navigation handlers');
+
+        // Backup handlers for navigation links
+        const navLinks = [
+            { id: 'dashboardLink', url: () => `/dashboard?userId=${userId}&role=${currentUser?.role || 'TUTOR'}` },
+            { id: 'browseTuteesLink', url: () => `/browse-tutees?userId=${userId}` },
+            { id: 'profileNavLink', url: () => currentUser?.role === 'TUTOR' ? `/tutor-profile?userId=${userId}` : `/tutee-profile?userId=${userId}` },
+            { id: 'messagesLink', url: () => `/messages?userId=${userId}` }
+        ];
+
+        navLinks.forEach(({ id, url }) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const targetUrl = url();
+                    console.log(`Backup navigation for ${id}:`, targetUrl);
+                    window.location.href = targetUrl;
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Role - Qiwi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .selection-container {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .welcome-section {
+      margin-bottom: 3rem;
+    }
+
+    .logo {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .selection-container h1 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .role-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .role-card {
+      background: #f8f9fa;
+      border: 3px solid #e1e5e9;
+      border-radius: 15px;
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .role-card:hover {
+      border-color: #4285f4;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(66, 133, 244, 0.2);
+    }
+
+    .role-card.selected {
+      border-color: #4285f4;
+      background: #e8f0fe;
+    }
+
+    .role-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .role-card h3 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .role-card p {
+      color: #666;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .continue-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    .continue-btn:hover {
+      background-color: #3367d6;
+    }
+
+    .continue-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .note {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #e3f2fd;
+      border-radius: 10px;
+      color: #1565c0;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .role-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .selection-container {
+        padding: 2rem;
+        margin: 1rem;
+      }
+
+      .role-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="selection-container">
+  <div class="welcome-section">
+    <div class="logo">🎓</div>
+    <h1>Welcome to Qiwi</h1>
+    <p class="subtitle">Choose how you want to use the platform</p>
+  </div>
+
+  <div class="role-options">
+    <div class="role-card" onclick="selectRole('TUTEE')" id="tutee-card">
+      <div class="role-icon">📚</div>
+      <h3>I want to learn</h3>
+      <p>Connect with tutors and get help with your studies</p>
+    </div>
+
+    <div class="role-card" onclick="selectRole('TUTOR')" id="tutor-card">
+      <div class="role-icon">🎯</div>
+      <h3>I want to teach</h3>
+      <p>Share your knowledge and help other students succeed</p>
+    </div>
+  </div>
+
+  <button class="continue-btn" id="continueBtn" onclick="continueToProfile()" disabled>
+    Continue
+  </button>
+
+  <div class="note">
+    💡 You can always switch between roles later in your dashboard
+  </div>
+</div>
+
+<script th:inline="javascript">
+  const userId = /*[[${userId}]]*/ '';
+  let selectedRole = null;
+  const API_BASE = '/api';
+
+  function selectRole(role) {
+    selectedRole = role;
+
+    // Remove previous selection
+    document.querySelectorAll('.role-card').forEach(card => {
+      card.classList.remove('selected');
+    });
+
+    // Add selection to clicked card
+    const cardId = role === 'TUTOR' ? 'tutor-card' : 'tutee-card';
+    document.getElementById(cardId).classList.add('selected');
+
+    // Enable continue button
+    document.getElementById('continueBtn').disabled = false;
+  }
+
+  async function continueToProfile() {
+    if (!selectedRole || !userId) {
+      alert('Please select a role and ensure you are logged in');
+      return;
+    }
+
+    try {
+      // Update user role via API
+      const response = await fetch(`${API_BASE}/auth/update-role`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: userId,
+          role: selectedRole
+        })
+      });
+
+      if (response.ok) {
+        // Update stored user info
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        currentUser.role = selectedRole;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+        // Redirect to profile setup
+        if (selectedRole === 'TUTOR') {
+          window.location.href = `/tutor-profile?userId=${userId}`;
+        } else {
+          window.location.href = `/tutee-profile?userId=${userId}`;
+        }
+      } else {
+        alert('Failed to update role. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error updating role:', error);
+      // For MVP, just redirect without API call
+      if (selectedRole === 'TUTOR') {
+        window.location.href = `/tutor-profile?userId=${userId}`;
+      } else {
+        window.location.href = `/tutee-profile?userId=${userId}`;
+      }
+    }
+  }
+
+  // Check if user is already logged in and has role
+  window.addEventListener('load', function() {
+    if (!userId) {
+      window.location.href = '/login';
+      return;
+    }
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (currentUser.role) {
+      // User already has a role, redirect to dashboard
+      window.location.href = `/dashboard?userId=${userId}&role=${currentUser.role}`;
+    }
+  });
+</script>
+</body>
+</html>

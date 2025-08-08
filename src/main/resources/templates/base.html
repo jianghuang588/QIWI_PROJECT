@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle ?: 'Qiwi - University Tutoring Platform'}">Qiwi</title>
+
+    <!-- Shared CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* NAVIGATION STYLES */
+        .navbar {
+            background: #4285f4;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* USER SECTION */
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .user-greeting {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-menu-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .user-menu-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-1px);
+        }
+
+        .user-initial {
+            background: white;
+            color: #4285f4;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+            margin-top: 0.5rem;
+            border: 1px solid #e1e5e9;
+        }
+
+        .user-dropdown-menu.show {
+            display: block;
+            animation: dropdownFadeIn 0.2s ease;
+        }
+
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: #f8f9fa;
+        }
+
+        .user-dropdown-menu hr {
+            margin: 0.5rem 0;
+            border: none;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .logout-link {
+            color: #dc3545 !important;
+            font-weight: 500;
+        }
+
+        .logout-link:hover {
+            background: #fff5f5 !important;
+        }
+
+        /* AUTH BUTTONS */
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-btn {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .auth-btn.primary {
+            background: white;
+            color: #4285f4;
+        }
+
+        .auth-btn.primary:hover {
+            background: #f8f9fa;
+            transform: translateY(-1px);
+        }
+
+        .auth-btn.secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-1px);
+        }
+
+        /* ALERTS */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .user-section {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+<!-- NAVIGATION BAR -->
+<nav class="navbar">
+    <div class="container">
+        <!-- LOGO -->
+        <a href="/" class="logo">
+            🎓 <span>Qiwi</span>
+        </a>
+
+        <!-- NAVIGATION LINKS (when logged in) -->
+        <ul class="nav-links" id="navLinks" style="display: none;">
+            <li><a href="#" id="dashboardLink">Dashboard</a></li>
+            <li><a href="#" id="browseTutorsLink">Find Tutors</a></li>
+            <li><a href="#" id="messagesLink">Messages</a></li>
+        </ul>
+
+        <!-- USER SECTION (when logged in) -->
+        <div class="user-section" id="userSection" style="display: none;">
+            <div class="user-info">
+                <span class="user-greeting" id="userGreeting">Welcome!</span>
+                <div class="user-dropdown">
+                    <button class="user-menu-btn" onclick="toggleUserMenu()">
+                        <div class="user-initial" id="userInitial">U</div>
+                        <span id="userName">User</span>
+                        <span>▼</span>
+                    </button>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <a href="#" onclick="switchRole()" id="roleSwitchLink">Switch Role</a>
+                        <a href="#" onclick="viewProfile()" id="profileLink">Edit Profile</a>
+                        <hr>
+                        <a href="#" onclick="logout()" class="logout-link">🚪 Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AUTH BUTTONS (when logged out) -->
+        <div class="auth-buttons" id="authButtons">
+            <a href="/login" class="auth-btn secondary">Login</a>
+            <a href="/register" class="auth-btn primary">Register</a>
+        </div>
+    </div>
+</nav>
+
+<!-- FLASH MESSAGES -->
+<div class="main-content">
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+    <div th:if="${info}" class="alert alert-info" th:text="${info}"></div>
+</div>
+
+<!-- PAGE CONTENT -->
+<main class="main-content" th:fragment="content">
+    <!-- Page-specific content will be inserted here -->
+</main>
+
+<!-- SHARED JAVASCRIPT -->
+<script th:inline="javascript">
+    // Global variables
+    const API_BASE = '/api';
+    const currentUserId = /*[[${userId}]]*/ null;
+    let currentUser = null;
+
+    // Initialize navigation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeNavigation();
+        updateActiveNavLink();
+    });
+
+    // NAVIGATION FUNCTIONS
+    function initializeNavigation() {
+        // Load user from localStorage
+        const storedUser = localStorage.getItem('currentUser');
+        if (storedUser) {
+            currentUser = JSON.parse(storedUser);
+            showLoggedInNav();
+        } else if (currentUserId) {
+            // Create user object from page data
+            currentUser = {
+                id: currentUserId,
+                name: 'Student',
+                role: 'TUTEE'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            showLoggedInNav();
+        } else {
+            showLoggedOutNav();
+        }
+    }
+
+    function showLoggedInNav() {
+        document.getElementById('navLinks').style.display = 'flex';
+        document.getElementById('userSection').style.display = 'flex';
+        document.getElementById('authButtons').style.display = 'none';
+
+        if (currentUser) {
+            updateUserInfo();
+            updateNavigationLinks();
+        }
+    }
+
+    function showLoggedOutNav() {
+        document.getElementById('navLinks').style.display = 'none';
+        document.getElementById('userSection').style.display = 'none';
+        document.getElementById('authButtons').style.display = 'flex';
+    }
+
+    function updateUserInfo() {
+        const userGreeting = document.getElementById('userGreeting');
+        const userInitial = document.getElementById('userInitial');
+        const userName = document.getElementById('userName');
+        const roleSwitchLink = document.getElementById('roleSwitchLink');
+
+        if (userGreeting) {
+            userGreeting.textContent = `Hello, ${currentUser.name || 'Student'}!`;
+        }
+
+        if (userInitial) {
+            userInitial.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+        }
+
+        if (userName) {
+            userName.textContent = currentUser.name || 'Student';
+        }
+
+        if (roleSwitchLink) {
+            const currentRole = currentUser.role || 'TUTEE';
+            const switchToRole = currentRole === 'TUTOR' ? 'Student' : 'Tutor';
+            roleSwitchLink.textContent = `Switch to ${switchToRole}`;
+        }
+    }
+
+    function updateNavigationLinks() {
+        if (!currentUser) return;
+
+        const userId = currentUser.id;
+        const role = currentUser.role || 'TUTEE';
+
+        const dashboardLink = document.getElementById('dashboardLink');
+        const browseTutorsLink = document.getElementById('browseTutorsLink');
+        const messagesLink = document.getElementById('messagesLink');
+
+        if (dashboardLink) {
+            dashboardLink.href = `/dashboard?userId=${userId}&role=${role}`;
+        }
+
+        if (browseTutorsLink) {
+            browseTutorsLink.href = `/browse-tutors?userId=${userId}`;
+        }
+
+        if (messagesLink) {
+            messagesLink.href = `/messages?userId=${userId}`;
+        }
+    }
+
+    function updateActiveNavLink() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        navLinks.forEach(link => {
+            const linkPath = new URL(link.href).pathname;
+            if (linkPath === currentPath) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    // USER MENU FUNCTIONS
+    function toggleUserMenu() {
+        const dropdown = document.getElementById('userDropdownMenu');
+        if (dropdown) {
+            dropdown.classList.toggle('show');
+        }
+    }
+
+    function switchRole() {
+        if (!currentUser) return;
+
+        const newRole = currentUser.role === 'TUTOR' ? 'TUTEE' : 'TUTOR';
+        currentUser.role = newRole;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+        window.location.href = `/dashboard?userId=${currentUser.id}&role=${newRole}`;
+    }
+
+    function viewProfile() {
+        if (!currentUser) return;
+
+        const role = currentUser.role || 'TUTEE';
+        if (role === 'TUTOR') {
+            window.location.href = `/tutor-profile?userId=${currentUser.id}`;
+        } else {
+            window.location.href = `/tutee-profile?userId=${currentUser.id}`;
+        }
+    }
+
+    function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            window.location.href = '/logout';
+        }
+    }
+
+    // UTILITY FUNCTIONS
+    function showAlert(message, type = 'info') {
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type}`;
+        alert.textContent = message;
+
+        const mainContent = document.querySelector('.main-content');
+        mainContent.insertBefore(alert, mainContent.firstChild);
+
+        setTimeout(() => alert.remove(), 5000);
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('userDropdownMenu');
+        const button = document.querySelector('.user-menu-btn');
+
+        if (dropdown && button && !button.contains(event.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+
+    // API Helper Functions
+    async function apiCall(endpoint, options = {}) {
+        try {
+            const response = await fetch(`${API_BASE}${endpoint}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                ...options
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('API Error:', error);
+            showAlert('An error occurred. Please try again.', 'error');
+            throw error;
+        }
+    }
+</script>
+</body>
+</html>

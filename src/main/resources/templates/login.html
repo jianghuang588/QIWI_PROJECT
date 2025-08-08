@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Qiwi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #3d3f5c;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .login-container {
+      background: white;
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      max-width: 450px;
+      width: 100%;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      color: #f4d1ae;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+    }
+
+    .login-container h1 {
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: #4a5568;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .sso-section {
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      text-align: center;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-sso {
+      background: linear-gradient(135deg, #3d3f5c 0%, #4a4d6b 100%);
+      color: white;
+      font-size: 1.1rem;
+      padding: 1.2rem;
+      box-shadow: 0 6px 20px rgba(61, 63, 92, 0.3);
+    }
+
+    .btn-sso:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(61, 63, 92, 0.4);
+    }
+
+    .btn-google {
+      background: linear-gradient(135deg, #db4437 0%, #c23321 100%);
+      color: white;
+      box-shadow: 0 6px 20px rgba(219, 68, 55, 0.3);
+    }
+
+    .btn-google:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(219, 68, 55, 0.4);
+    }
+
+    .divider {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #fafbfc;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #f4d1ae;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(244, 209, 174, 0.1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3d3f5c 0%, #4a4d6b 100%);
+      color: white;
+      font-weight: 700;
+      padding: 1.1rem;
+      font-size: 1.1rem;
+      box-shadow: 0 6px 20px rgba(61, 63, 92, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(61, 63, 92, 0.4);
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 2rem;
+      color: #4a5568;
+      font-size: 0.95rem;
+    }
+
+    .register-link a {
+      color: #3d3f5c;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .register-link a:hover {
+      color: #f4d1ae;
+      text-decoration: underline;
+    }
+
+    .back-home {
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .back-link {
+      color: #4a5568;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      color: #f4d1ae;
+      background: rgba(244, 209, 174, 0.08);
+      text-decoration: none;
+      transform: translateX(-2px);
+    }
+
+    .alert {
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      border-left: 4px solid;
+    }
+
+    .alert-error {
+      background: #fef2f2;
+      color: #991b1b;
+      border-left-color: #ef4444;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 3px solid rgba(244, 209, 174, 0.3);
+      border-top: 3px solid #f4d1ae;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading p {
+      margin-top: 1rem;
+      color: #4a5568;
+      font-weight: 500;
+    }
+
+    /* Hero Badge */
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(244, 209, 174, 0.15) 0%, rgba(244, 209, 174, 0.25) 100%);
+      color: #8b5a2b;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(244, 209, 174, 0.3);
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 2rem;
+        margin: 1rem;
+      }
+
+      .logo {
+        font-size: 2rem;
+      }
+
+      .login-container h1 {
+        font-size: 1.6rem;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="login-container">
+  <div class="logo-section">
+    <!-- Back to home link moved to top -->
+    <div class="back-home">
+      <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <div class="hero-badge"> For University Students</div>
+    <div class="logo">Qiwi</div>
+    <h1>Welcome Back</h1>
+    <p class="subtitle">Connect with fellow students who have succeeded in their exams. Learn from peers or share your knowledge by teaching others.</p>
+  </div>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Logging in...</p>
+  </div>
+
+  <!-- Manual Login Form -->
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="email">University Email Address</label>
+      <input type="email" id="email" name="email" class="form-control"
+             placeholder="your.email@university.edu" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sign In</button>
+  </form>
+
+  <div class="register-link">
+    Don't have an account? <a href="/register">Register here</a>
+  </div>
+</div>
+
+<script>
+  const API_BASE = '/api';
+
+  function showLoading() {
+    document.getElementById('loading').style.display = 'block';
+  }
+
+  function hideLoading() {
+    document.getElementById('loading').style.display = 'none';
+  }
+
+  function showAlert(message, type = 'error') {
+    // Remove existing alerts
+    const existingAlert = document.querySelector('.alert');
+    if (existingAlert) {
+      existingAlert.remove();
+    }
+
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.textContent = message;
+
+    const form = document.getElementById('loginForm');
+    form.parentNode.insertBefore(alertDiv, form);
+  }
+
+  // Manual login form handler
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;
+
+    if (!email) {
+      showAlert('Please enter your email address');
+      return;
+    }
+
+    showLoading();
+
+    try {
+      const response = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+
+      hideLoading();
+
+      if (response.ok) {
+        const user = await response.json();
+
+        // Store user info
+        localStorage.setItem('currentUser', JSON.stringify(user));
+
+        // Redirect based on user role or to dashboard
+        if (user.role) {
+          window.location.href = `/dashboard?userId=${user.id}&role=${user.role}`;
+        } else {
+          window.location.href = `/role-selection?userId=${user.id}`;
+        }
+      } else {
+        const errorText = await response.text();
+        showAlert(errorText || 'Login failed. Please check your email.');
+      }
+    } catch (error) {
+      hideLoading();
+      console.error('Login error:', error);
+      showAlert('An error occurred. Please try again.');
+    }
+  });
+
+  // Check if user is already logged in
+  window.addEventListener('load', function() {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      const user = JSON.parse(currentUser);
+      window.location.href = `/dashboard?userId=${user.id}`;
+    }
+  });
+</script>
+</body>
+</html>
