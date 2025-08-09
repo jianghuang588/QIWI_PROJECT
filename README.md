@@ -8,35 +8,35 @@ A peer-to-peer tutoring platform connecting university students for academic sup
 <summary>▶️ <b>1. Landing Page & Platform Overview</b></summary>
 Welcome interface showcasing the platform's core value proposition for university students.
 
-![Landing Page](https://github.com/user-attachments/assets/86bf19ee-f1e9-4c72-9ed0-d4e4ba92abc3)
+![a](https://github.com/user-attachments/assets/f9b83d78-d393-4e51-bc38-bc8231df4ed1)
 </details>
 
 <details>
 <summary>▶️ <b>2. Student Dashboard & Learning Hub</b></summary>
 Main student interface featuring session management, tutor discovery, and academic progress tracking.
-
-![Student Dashboard](https://github.com/user-attachments/assets/5529ae7c-1460-473a-8087-4d4464f7e8f0)
+  
+![b](https://github.com/user-attachments/assets/d417e571-c7ef-4e7b-b1e9-5e13d5538fbb)
 </details>
 
 <details>
 <summary>▶️ <b>3. Tutor Dashboard & Session Management</b></summary>
 Tutor interface for managing availability, student requests, and tutoring sessions.
-
-![Tutor Dashboard](https://github.com/user-attachments/assets/7c527ec8-289a-4bba-956f-cf16278e46c2)
+  
+![c](https://github.com/user-attachments/assets/1c339897-86f8-4ac2-b1ff-ae38024c45b8)
 </details>
 
 <details>
 <summary>▶️ <b>4. Session Booking System</b></summary>
 Interactive booking interface for scheduling tutoring sessions and managing appointments.
 
-![Session Booking](https://github.com/user-attachments/assets/9e476375-47cf-48ab-ab6d-f1317e46ccbb)
+![d](https://github.com/user-attachments/assets/25eb14f2-aef7-4b5f-a872-93743e390889)
 </details>
 
 <details>
 <summary>▶️ <b>5. Communication & Messaging</b></summary>
 Integrated messaging system for seamless communication between students and tutors.
 
-![Messaging System](https://github.com/user-attachments/assets/9d53a422-b175-4474-b735-5ff17564a3ea)
+![e](https://github.com/user-attachments/assets/68cd1209-8052-458b-ac20-745c16de45cd)
 </details>
 
 ## ⭐ Key Features
