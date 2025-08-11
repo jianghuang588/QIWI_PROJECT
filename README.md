@@ -60,5 +60,4 @@ This platform serves as a Proof of Concept to validate:
 **Backend:** Authentication system, Email verification  
 **Database:** User profiles, courses, messaging system
 
-## 🚀 Quick Start
-```bash
+
