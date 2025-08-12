@@ -720,14 +720,49 @@
 
     function populateSubjects() {
         const grid = document.getElementById('subjectsGrid');
-        grid.innerHTML = subjects.map(subject => `
-                <div class="subject-item" onclick="clickSubjectItem('${subject}')">
-                    <input type="checkbox" id="subject_${subject}" value="${subject}"
-                           onchange="toggleSubject('${subject}')" onclick="event.stopPropagation()">
-                    <label for="subject_${subject}">${subject.replace(/_/g, ' ')}</label>
-                </div>
-            `).join('');
+
+        // Map the shorter enum names to display data
+        const subjectData = {
+            'CORP_FIN': { code: 'lecge1108', name: 'Économie politique' },
+            'MARKETING': { code: 'ling1108', name: 'Marketing' },
+            'MATH_ANAL': { code: 'ling1114', name: 'Introduction à la modélisation mathématiques : analyse' },
+            'CHEM_ENV1': { code: 'ling1115', name: 'Chimie et environnement I' },
+            'FIN_ACC': { code: 'ling1107', name: 'Comptabilité financière et analyse des états financiers' },
+            'DATA_PROB': { code: 'ling1113', name: 'Analyse de données : Probabilités' },
+            'MATH_ALG': { code: 'ling1121', name: 'Introduction à la modélisation mathématique : algèbre' },
+            'PHYS_EN1': { code: 'ling1122', name: 'Physique et énergie I' },
+            'ENGLISH1': { code: 'lang1330', name: 'Anglais niveau moyen 1ère partie' },
+            'MACRO': { code: 'lecge1212', name: 'Macroéconomie' },
+            'MICRO': { code: 'lecge1222', name: 'Microéconomie' },
+            'DATA_STAT': { code: 'ling1214', name: 'Analyse de données : Statistiques' },
+            'PROG_ECO': { code: 'ling1225', name: 'Programmation en économie et gestion' },
+            'PHYS_EN2': { code: 'ling1213', name: 'Physique et énergie II' },
+            'LAW_BUS': { code: 'lespo1221', name: 'Droit, entreprise et fiscalité' },
+            'MGMT_SCI': { code: 'ling1216', name: 'Management sciences : modèles déterministes' },
+            'CHEM_ENV2': { code: 'ling1223', name: 'Chimie et environnement II' },
+            'DIGI_ECO': { code: 'lecge1303', name: 'Digital economics' },
+            'BIG_DATA': { code: 'lecge1301', name: 'Analyse de données : nouvelles méthodes (Big Data, IA)' },
+            'TECH_DEV1': { code: 'ling1317', name: 'Recherche et développement technologique : énergie, électronique et télécommunications' },
+            'ECO_HIST': { code: 'lecge1217', name: 'History of Economic Theory' },
+            'FIN_INFO': { code: 'ling1322', name: 'Finance and information systems' },
+            'TECH_DEV2': { code: 'ling1327', name: 'Recherche et développement technologique : mécanique, procédés chimiques et matériaux' }
+        };
+
+        grid.innerHTML = subjects.map(subject => {
+            const data = subjectData[subject] || { code: subject.toLowerCase(), name: subject.replace(/_/g, ' ') };
+            return `
+            <div class="subject-item" onclick="clickSubjectItem('${subject}')">
+                <input type="checkbox" id="subject_${subject}" value="${subject}"
+                       onchange="toggleSubject('${subject}')" onclick="event.stopPropagation()">
+                <label for="subject_${subject}">${data.code} - ${data.name}</label>
+            </div>
+        `;
+        }).join('');
     }
+
+
+
+
 
     function clickSubjectItem(subject) {
         const checkbox = document.getElementById(`subject_${subject}`);

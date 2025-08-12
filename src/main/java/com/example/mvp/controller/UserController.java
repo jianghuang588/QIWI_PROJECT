@@ -17,7 +17,6 @@ import java.util.ArrayList;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-    // ADD THIS - Inject UserRepository
     @Autowired
     private UserRepository userRepository;
 
@@ -26,7 +25,6 @@ public class UserController {
         try {
             System.out.println("🔧 FIXING USER ROLES");
 
-            // Find User ID 1 and make them a tutor if they're currently a student
             User user1 = userRepository.findById(1L).orElse(null);
             if (user1 != null) {
                 System.out.println("Found user 1: " + user1.getName() + " with role: " + user1.getRole());
@@ -65,6 +63,10 @@ public class UserController {
                 userInfo.put("name", user.getName());
                 userInfo.put("email", user.getEmail());
                 userInfo.put("role", user.getRole().toString());
+                // ADD COURSE INFO TO DEBUG
+                userInfo.put("courseCode", user.getCourseCode());
+                userInfo.put("courseName", user.getCourseName());
+                userInfo.put("yearLevel", user.getYearLevel());
                 usersList.add(userInfo);
             }
 

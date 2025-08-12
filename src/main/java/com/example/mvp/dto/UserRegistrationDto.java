@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-// User Registration DTO
 public class UserRegistrationDto {
     @NotBlank(message = "Name is required")
     private String name;
@@ -21,15 +20,21 @@ public class UserRegistrationDto {
     @NotNull(message = "Role is required")
     private UserRole role;
 
+    // ADD THESE NEW FIELDS
+    private String courseCode;
+    private String courseName;
+    private String yearLevel;
+
     @NotNull(message = "Terms acceptance is required")
     private Boolean termsAccepted;
 
     @NotNull(message = "Privacy acceptance is required")
     private Boolean privacyAccepted;
 
-    // Constructors, getters, setters
+    // Constructors
     public UserRegistrationDto() {}
 
+    // Existing getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -41,6 +46,16 @@ public class UserRegistrationDto {
 
     public UserRole getRole() { return role; }
     public void setRole(UserRole role) { this.role = role; }
+
+    // ADD THESE NEW GETTERS AND SETTERS
+    public String getCourseCode() { return courseCode; }
+    public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+
+    public String getCourseName() { return courseName; }
+    public void setCourseName(String courseName) { this.courseName = courseName; }
+
+    public String getYearLevel() { return yearLevel; }
+    public void setYearLevel(String yearLevel) { this.yearLevel = yearLevel; }
 
     public Boolean getTermsAccepted() { return termsAccepted; }
     public void setTermsAccepted(Boolean termsAccepted) { this.termsAccepted = termsAccepted; }

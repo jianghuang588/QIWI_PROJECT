@@ -219,16 +219,11 @@
         }
 
         .main-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            align-items: start; /* Align to top to prevent stretching */
+            display: block;
         }
 
-        /* MAIN CONTENT SECTIONS - Only show white background when there's content */
         .content-section {
             border-radius: 12px;
-            /* No default styling - only gets background/padding when it has content */
         }
 
         .content-section.has-content {
@@ -249,7 +244,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Remove bottom margin from last content sections */
         #sessionsContent {
             margin-bottom: 0;
         }
@@ -259,10 +253,9 @@
         }
 
         .session-list {
-            margin-bottom: 0; /* Remove any extra margin from session list */
+            margin-bottom: 0;
         }
 
-        /* Utility class to clean up spacing in containers */
         .tight-container > *:last-child {
             margin-bottom: 0 !important;
         }
@@ -316,7 +309,7 @@
         }
 
         .availability-section:last-child {
-            margin-bottom: 0; /* Remove bottom margin if it's the last section */
+            margin-bottom: 0;
         }
 
         .availability-header {
@@ -390,163 +383,6 @@
             background: #c82333;
         }
 
-        .offer-item, .request-item {
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background: white;
-            transition: all 0.3s ease;
-        }
-
-        .offer-item:last-child, .request-item:last-child {
-            margin-bottom: 0; /* Remove bottom margin from last item */
-        }
-
-        .offer-item:hover, .request-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-color: #cbd5e0;
-        }
-
-        .request-item.conflict-warning {
-            background: white;
-            border-left: 4px solid #ef4444;
-        }
-
-        .conflict-banner {
-            background: #ef4444;
-            color: white;
-            padding: 0.5rem 1rem;
-            margin: -1.5rem -1.5rem 1rem -1.5rem;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border-radius: 12px 12px 0 0;
-        }
-
-        .tutor-name, .student-name {
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-            letter-spacing: -0.01em;
-        }
-
-        .request-subject, .offer-subject {
-            color: #4a5568;
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-            font-weight: 400;
-        }
-
-        .request-time, .offer-time {
-            color: #4a5568;
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
-            font-weight: 400;
-        }
-
-        .request-notes, .offer-notes {
-            background: #f9fafb;
-            padding: 1rem;
-            border-radius: 8px;
-            font-style: italic;
-            color: #4a5568;
-            margin-bottom: 1.5rem;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            border-left: 3px solid #e5e7eb;
-        }
-
-        .request-actions, .offer-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .accept-btn {
-            flex: 1;
-            padding: 0.875rem 1.25rem;
-            background: #059669;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            letter-spacing: -0.01em;
-        }
-
-        .reject-btn, .decline-btn {
-            flex: 1;
-            padding: 0.875rem 1.25rem;
-            background: #f9fafb;
-            color: #4a5568;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            letter-spacing: -0.01em;
-        }
-
-        .accept-btn:hover {
-            background: #047857;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
-        }
-
-        .reject-btn:hover, .decline-btn:hover {
-            background: #f3f4f6;
-            color: #374151;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-            border-color: #cbd5e0;
-        }
-
-        .suggest-alt-btn {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            background: #fd7e14;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .suggest-alt-btn:hover {
-            background: #e8630a;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(253, 126, 20, 0.3);
-        }
-
-        .contact-student-btn {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            background: #6f42c1;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .contact-student-btn:hover {
-            background: #5a32a3;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(111, 66, 193, 0.3);
-        }
-
         .session-item {
             display: flex;
             justify-content: space-between;
@@ -560,7 +396,7 @@
         }
 
         .session-item:last-child {
-            margin-bottom: 0; /* Remove bottom margin from last item */
+            margin-bottom: 0;
         }
 
         .session-item:hover {
@@ -620,7 +456,7 @@
             background: #f9fafb;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
-            margin: 0; /* Remove default margins */
+            margin: 0;
         }
 
         .empty-state .icon {
@@ -636,160 +472,44 @@
             margin-bottom: 0.5rem;
         }
 
-        /* SIDEBAR SECTIONS - Only show styling when they have content */
-        .sidebar-section {
-            display: none; /* Hidden by default */
-        }
-
-        .sidebar-section.has-content {
-            display: block;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 1.5rem;
-            /* ONLY FIX: Add minimum height for better visual balance */
-            min-height: 280px;
-        }
-
-        .sidebar-section:last-child.has-content {
-            margin-bottom: 0; /* Remove bottom margin from last section */
-        }
-
-        /* Ensure no extra spacing in sidebar content */
-        .sidebar-section .empty-state {
-            margin: 0;
-        }
-
-        .sidebar-section h3 {
-            color: #2d3748;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        /* Remove extra spacing from last elements in sections */
-        .sidebar-section > div:last-child {
-            margin-bottom: 0;
-        }
-
-        /* FREE USAGE MESSAGE STYLING */
-        .free-usage-message {
-            text-align: center;
-            padding: 2rem;
-            color: #4a5568;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        /* SESSION ACTIONS FOR PENDING SESSIONS */
+        .session-actions {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 280px;
+            gap: 0.5rem;
+            margin-left: 1rem;
         }
 
-        .free-usage-message .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #28a745;
-        }
-
-        .free-usage-message h3 {
-            color: #2d3748;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+        .accept-btn, .reject-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
             font-weight: 600;
-        }
-
-        .free-usage-message p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            color: #4a5568;
-        }
-
-        /* HELPFUL CONTENT STYLING */
-        .tip-item, .stat-item {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
         }
 
-        /* Quick Tips section should NOT have white background - let tip items show their own backgrounds */
-        #quickTipsSection.has-content {
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-            padding: 0 !important;
+        .accept-btn {
+            background: #d4edda;
+            color: #155724;
         }
 
-        /* Add spacing between Quick Tips title and content */
-        #quickTipsSection h3 {
-            margin-bottom: 1rem;
-            padding: 0 1.5rem;
-        }
-
-        .tip-item:last-child, .stat-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .tip-item:hover, .stat-item:hover {
-            background: #f1f3f4;
+        .accept-btn:hover {
+            background: #c3e6cb;
             transform: translateY(-1px);
         }
 
-        .tip-title, .stat-title {
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+        .reject-btn {
+            background: #f8d7da;
+            color: #721c24;
         }
 
-        .tip-description, .stat-value {
-            color: #4a5568;
-            font-size: 0.85rem;
-            line-height: 1.4;
-        }
-
-        .stat-value {
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #28a745;
-        }
-
-        /* EMPTY SIDEBAR STYLING */
-        .sidebar-empty {
-            text-align: center;
-            padding: 2rem;
-            color: #4a5568;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .sidebar-empty .icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            opacity: 0.6;
-            color: #9ca3af;
-            font-weight: 600;
-        }
-
-        .sidebar-empty h3 {
-            color: #2d3748;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .sidebar-empty p {
-            font-size: 0.9rem;
-            line-height: 1.5;
+        .reject-btn:hover {
+            background: #f5c6cb;
+            transform: translateY(-1px);
         }
 
         .modal {
@@ -924,11 +644,6 @@
                 padding: 2rem 20px;
             }
 
-            .main-content {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
             .content-section.has-content {
                 padding: 1.5rem;
             }
@@ -937,19 +652,14 @@
                 grid-template-columns: 1fr;
             }
 
-            .sidebar-section.has-content {
-                padding: 1.25rem;
-                margin-bottom: 1rem;
-                min-height: 200px; /* Smaller min-height on mobile */
+            .session-actions {
+                flex-direction: column;
+                gap: 0.25rem;
             }
 
-            .free-usage-message {
-                padding: 1.5rem;
-                min-height: 200px;
-            }
-
-            .sidebar-empty {
-                padding: 1.5rem;
+            .accept-btn, .reject-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
             }
         }
     </style>
@@ -1008,61 +718,6 @@
                 <div id="sessionsList" class="session-list">
                     <!-- Sessions will be populated by JavaScript -->
                 </div>
-            </div>
-        </div>
-
-        <div class="content-section tight-container" id="sidebarContainer">
-            <!-- Quick Tips Section -->
-            <div id="quickTipsSection" class="sidebar-section tight-container">
-                <h3>Quick Tips</h3>
-                <div id="quickTipsList">
-                    <!-- Tips will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Tutor: Pending Session Requests -->
-            <div id="pendingSessions" class="sidebar-section tight-container">
-                <h3>Pending Session Requests</h3>
-                <div id="pendingSessionsList">
-                    <!-- Pending sessions will be populated for tutors -->
-                </div>
-            </div>
-
-            <!-- Student: Tutor Offers Awaiting Response -->
-            <div id="pendingOffers" class="sidebar-section tight-container">
-                <h3>Tutor Offers for You</h3>
-                <div id="pendingOffersList">
-                    <!-- Tutor offers will be populated for students -->
-                </div>
-            </div>
-
-            <!-- Upcoming Sessions section -->
-            <div id="upcomingSessionsSection" class="sidebar-section tight-container">
-                <h3>Upcoming Sessions</h3>
-                <div id="upcomingSessionsList">
-                    <!-- Upcoming sessions will be populated -->
-                </div>
-                <div class="empty-state" id="emptyUpcoming" style="display: none;">
-                    <div class="icon">No Sessions</div>
-                    <p>No upcoming sessions</p>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem;" id="emptyMessage">Book a session to get started!</p>
-                </div>
-            </div>
-
-            <!-- Free Usage Message -->
-            <div id="freeUsageMessage" class="free-usage-message tight-container">
-                <div class="icon">Free</div>
-                <h3>Completely Free to Use!</h3>
-                <p>Qiwi is <span class="highlight">100% free</span> for all students and tutors.</p>
-                <p>No hidden fees, no subscriptions - just peer-to-peer learning at its best!</p>
-                <p style="font-size: 0.9rem; margin-top: 1rem; color: #666;">Start connecting with peers and enhance your learning experience today.</p>
-            </div>
-
-            <!-- Empty sidebar state -->
-            <div id="sidebarEmpty" class="sidebar-empty tight-container" style="display: none;">
-                <div class="icon">📚</div>
-                <h3 id="sidebarTitle">Quick Access</h3>
-                <p id="sidebarEmptyText">Your notifications and upcoming sessions will appear here</p>
             </div>
         </div>
     </div>
@@ -1129,12 +784,7 @@
         updateNavigation();
         await loadDashboardData();
 
-        if (currentUser && currentUser.role === 'TUTOR') {
-            console.log('Auto-running debug for tutor...');
-            setTimeout(debugPendingSessions, 2000);
-        }
-
-        console.log('Dashboard loaded successfully with conflict detection');
+        console.log('Dashboard loaded successfully');
     });
 
     async function loadUserData() {
@@ -1275,12 +925,9 @@
         if (!currentUser) return;
 
         const role = currentUser.role || 'TUTEE';
-        const name = currentUser.name || 'Student';
 
         const quickActions = document.getElementById('quickActions');
         const mainContentSection = document.getElementById('mainContentSection');
-        const sidebarTitle = document.getElementById('sidebarTitle');
-        const sidebarEmptyText = document.getElementById('sidebarEmptyText');
 
         // Always give main content the has-content class since it has quick actions
         mainContentSection.classList.add('has-content');
@@ -1288,25 +935,10 @@
         if (role === 'TUTOR') {
             document.getElementById('mainContentTitle').textContent = 'Your Tutoring Sessions';
             document.getElementById('sessionsTitle').textContent = 'Recent Sessions';
-            sidebarTitle.textContent = 'Session Management';
-            sidebarEmptyText.textContent = 'Student requests and upcoming sessions will appear here';
-            document.getElementById('emptyMessage').textContent = 'Set your availability to receive bookings!';
 
             document.getElementById('availabilitySection').style.display = 'block';
 
             quickActions.innerHTML = `
-                <button class="action-btn" onclick="navigateTo('/browse-tutees?userId=${currentUser.id}')">
-                    <div class="btn-content">
-                        <div class="btn-title">Find Students</div>
-                        <div class="btn-subtitle">Connect with students who need help</div>
-                    </div>
-                </button>
-                <button class="action-btn" onclick="goToMessages()">
-                    <div class="btn-content">
-                        <div class="btn-title">Student Messages</div>
-                        <div class="btn-subtitle">View and respond to messages</div>
-                    </div>
-                </button>
                 <button class="action-btn" onclick="openAvailabilityModal()">
                     <div class="btn-content">
                         <div class="btn-title">Set Availability</div>
@@ -1325,23 +957,8 @@
         } else {
             document.getElementById('mainContentTitle').textContent = 'Your Learning Sessions';
             document.getElementById('sessionsTitle').textContent = 'Recent Sessions';
-            sidebarTitle.textContent = 'Quick Access';
-            sidebarEmptyText.textContent = 'Tutor offers and upcoming sessions will appear here';
-            document.getElementById('emptyMessage').textContent = 'Book a session to get started!';
 
             quickActions.innerHTML = `
-                <button class="action-btn" onclick="navigateTo('/browse-tutors?userId=${currentUser.id}')">
-                    <div class="btn-content">
-                        <div class="btn-title">Find Tutors</div>
-                        <div class="btn-subtitle">Browse available tutors by subject</div>
-                    </div>
-                </button>
-                <button class="action-btn" onclick="goToMessages()">
-                    <div class="btn-content">
-                        <div class="btn-title">Messages</div>
-                        <div class="btn-subtitle">Chat with your tutors</div>
-                    </div>
-                </button>
                 <button class="action-btn" onclick="viewMySessions()">
                     <div class="btn-content">
                         <div class="btn-title">My Bookings</div>
@@ -1360,110 +977,12 @@
 
     async function loadDashboardData() {
         try {
-            await Promise.all([
-                loadUpcomingSessions(),
-                loadSessionStats(),
-                currentUser.role === 'TUTOR' ? loadPendingSessions() : loadPendingOffers()
-            ]);
-
-            // Check if sidebar has any content
-            updateSidebarVisibility();
+            await loadSessionStats();
         } catch (error) {
             console.error('Error loading dashboard data:', error);
-            // Ensure sidebar visibility is still updated even if data loading fails
-            updateSidebarVisibility();
         }
     }
 
-    // FIXED: Keep helpful content always visible for consistent balance
-    function updateSidebarVisibility() {
-        const sidebarSections = document.querySelectorAll('.sidebar-section.has-content');
-        const sidebarEmpty = document.getElementById('sidebarEmpty');
-        const freeUsageMessage = document.getElementById('freeUsageMessage');
-        const sidebarContainer = document.getElementById('sidebarContainer');
-
-        // Always ensure we have helpful content visible for balance
-        ensureHelpfulContent(sidebarSections.length);
-
-        // Always hide empty states since we now guarantee content
-        sidebarEmpty.style.display = 'none';
-        freeUsageMessage.style.display = 'none';
-        sidebarContainer.classList.add('has-content');
-    }
-
-    function ensureHelpfulContent(contentSectionsCount) {
-        const quickTipsSection = document.getElementById('quickTipsSection');
-
-        // CHANGED: Always show tips to maintain visual balance
-        quickTipsSection.classList.add('has-content');
-        loadQuickTips();
-    }
-
-    function loadQuickTips() {
-        const container = document.getElementById('quickTipsList');
-        const tips = currentUser.role === 'TUTOR' ? getTutorTips() : getStudentTips();
-
-        container.innerHTML = tips.map(tip => `
-            <div class="session-item" style="align-items: flex-start; flex-direction: column;">
-                <div class="session-info" style="flex: none;">
-                    <h4 style="margin-bottom: 0.5rem;">${tip.title}</h4>
-                    <div class="session-time" style="margin-bottom: 0;">${tip.description}</div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function getTutorTips() {
-        const tips = [
-            {
-                title: "Set Clear Availability",
-                description: "Regular availability helps students book sessions with you more easily."
-            },
-            {
-                title: "Respond Quickly",
-                description: "Fast responses to session requests improve your tutor rating."
-            },
-            {
-                title: "Be Specific in Subjects",
-                description: "List specific topics you excel at to attract the right students."
-            },
-            {
-                title: "Prepare Session Materials",
-                description: "Having examples and practice problems ready makes sessions more effective."
-            }
-        ];
-
-        // Rotate tips to show variety
-        const startIndex = Math.floor(Date.now() / (1000 * 60 * 60)) % tips.length;
-        return tips.slice(startIndex, startIndex + 2).concat(tips.slice(0, Math.max(0, startIndex + 2 - tips.length)));
-    }
-
-    function getStudentTips() {
-        const tips = [
-            {
-                title: "Come Prepared",
-                description: "Bring specific questions and materials to make the most of your session."
-            },
-            {
-                title: "Book in Advance",
-                description: "Popular tutors fill up quickly, so book sessions early."
-            },
-            {
-                title: "Be Clear About Goals",
-                description: "Tell your tutor what you want to achieve in each session."
-            },
-            {
-                title: "Take Notes",
-                description: "Review session notes afterwards to reinforce what you learned."
-            }
-        ];
-
-        // Rotate tips to show variety
-        const startIndex = Math.floor(Date.now() / (1000 * 60 * 60)) % tips.length;
-        return tips.slice(startIndex, startIndex + 2).concat(tips.slice(0, Math.max(0, startIndex + 2 - tips.length)));
-    }
-
-    // ALL YOUR EXISTING FUNCTIONS REMAIN UNCHANGED...
     async function loadSessionStats() {
         console.log('Loading session stats for role:', currentUser.role, 'userId:', currentUser.id);
 
@@ -1488,144 +1007,6 @@
             }
         } catch (error) {
             console.error('Error loading session stats:', error);
-        }
-    }
-
-    async function loadPendingOffers() {
-        if (!currentUser || currentUser.role !== 'TUTEE') {
-            console.log('Not a student, skipping pending offers load');
-            return;
-        }
-
-        console.log('===== LOADING PENDING OFFERS =====');
-        console.log('   Student ID:', currentUser.id);
-
-        try {
-            const response = await fetch(`${API_BASE}/sessions/student/${currentUser.id}/pending-offers`);
-            console.log('Pending offers response status:', response.status);
-
-            if (response.ok) {
-                const offers = await response.json();
-                console.log('===== RECEIVED PENDING OFFERS =====');
-                console.log('   Raw response:', offers);
-                console.log('   Number of offers:', offers.length);
-
-                displayPendingOffers(offers);
-                console.log('Pending offers loaded and displayed');
-            } else {
-                const errorText = await response.text();
-                console.error('API Error response:', errorText);
-            }
-        } catch (error) {
-            console.error('Error loading pending offers:', error);
-        }
-    }
-
-    function displayPendingOffers(offers) {
-        const container = document.getElementById('pendingOffersList');
-        const section = document.getElementById('pendingOffers');
-
-        console.log('===== DISPLAYING PENDING OFFERS =====');
-        console.log('   Container found:', !!container);
-        console.log('   Offers to display:', offers.length);
-
-        if (!container) {
-            console.error('Pending offers container not found!');
-            return;
-        }
-
-        if (offers.length === 0) {
-            console.log('No pending offers to display');
-            container.innerHTML = `
-                <div class="empty-state">
-                    <div class="icon">No Offers</div>
-                    <p>No tutor offers</p>
-                    <p style="font-size: 0.9rem;">Tutors will send you session offers!</p>
-                </div>
-            `;
-            section.classList.remove('has-content');
-            return;
-        }
-
-        console.log('Rendering', offers.length, 'pending offers');
-
-        const html = offers.map((offer, index) => {
-            console.log(`   Rendering offer ${index + 1}:`, offer.id);
-
-            return `
-                <div class="offer-item">
-                    <div class="tutor-name">${offer.tutor?.name || 'Unknown Tutor'}</div>
-                    <div class="offer-subject"><strong>Subject:</strong> ${offer.subject}</div>
-                    <div class="offer-time">
-                        <strong>Offered Time:</strong><br>
-                        ${formatDateTime(offer.startTime)} - ${formatTime(offer.endTime)}
-                    </div>
-                    ${offer.sessionNotes ? `
-                        <div class="offer-notes">
-                            <strong>Tutor says:</strong><br>
-                            "${offer.sessionNotes.replace('TUTOR_INITIATED: ', '').replace(/⚠️\s*/g, '')}"
-                        </div>
-                    ` : ''}
-                    <div class="offer-actions">
-                        <button class="accept-btn" onclick="acceptTutorOffer(${offer.id})">
-                            Accept Offer
-                        </button>
-                        <button class="decline-btn" onclick="declineTutorOffer(${offer.id})">
-                            Decline Offer
-                        </button>
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        container.innerHTML = html;
-        section.classList.add('has-content');
-        console.log('Pending offers HTML rendered');
-    }
-
-    async function acceptTutorOffer(sessionId) {
-        console.log('Accepting tutor offer:', sessionId);
-
-        if (confirm('Accept this tutoring session offer?')) {
-            try {
-                const response = await fetch(`${API_BASE}/sessions/${sessionId}/accept-offer`, {
-                    method: 'PUT'
-                });
-
-                if (response.ok) {
-                    console.log('Offer accepted, reloading dashboard data');
-                    await loadDashboardData();
-                } else {
-                    const errorText = await response.text();
-                    console.error('Failed to accept offer:', errorText);
-                }
-            } catch (error) {
-                console.error('Error accepting offer:', error);
-            }
-        }
-    }
-
-    async function declineTutorOffer(sessionId) {
-        console.log('Declining tutor offer:', sessionId);
-
-        const reason = prompt('Optional: Provide a reason for declining');
-
-        if (confirm('Decline this tutoring session offer?')) {
-            try {
-                const response = await fetch(`${API_BASE}/sessions/${sessionId}/decline-offer?reason=${encodeURIComponent(reason || '')}`, {
-                    method: 'PUT'
-                });
-
-                if (response.ok) {
-                    console.log('Offer declined, reloading dashboard data');
-                    await loadDashboardData();
-                } else {
-                    const errorText = await response.text();
-                    console.error('Failed to decline offer:', errorText);
-                }
-            } catch (error) {
-                console.error('Error declining offer:', error);
-            }
         }
     }
 
@@ -1743,197 +1124,6 @@
         }
     });
 
-    async function loadUpcomingSessions() {
-        try {
-            const endpoint = currentUser.role === 'TUTOR'
-                ? `/sessions/tutor/${currentUser.id}/upcoming`
-                : `/sessions/student/${currentUser.id}/upcoming`;
-
-            const response = await fetch(`${API_BASE}${endpoint}`);
-            if (response.ok) {
-                const sessions = await response.json();
-                displayUpcomingSessions(sessions);
-            }
-        } catch (error) {
-            console.error('Error loading upcoming sessions:', error);
-        }
-    }
-
-    async function loadPendingSessions() {
-        if (!currentUser || currentUser.role !== 'TUTOR') {
-            console.log('Not a tutor, skipping pending sessions load');
-            return;
-        }
-
-        console.log('===== LOADING PENDING SESSIONS WITH CONFLICT DETECTION =====');
-        console.log('   Tutor ID:', currentUser.id);
-        console.log('   Tutor Role:', currentUser.role);
-
-        try {
-            const response = await fetch(`${API_BASE}/sessions/tutor/${currentUser.id}/pending`);
-            console.log('Pending sessions response status:', response.status);
-            console.log('Response OK:', response.ok);
-
-            if (response.ok) {
-                const sessions = await response.json();
-                console.log('===== RECEIVED PENDING SESSIONS =====');
-                console.log('   Raw response:', sessions);
-                console.log('   Number of sessions:', sessions.length);
-
-                const sessionsWithConflicts = await Promise.all(
-                    sessions.map(async (session) => {
-                        try {
-                            const conflictResponse = await fetch(`${API_BASE}/sessions/check-conflicts`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    studentId: session.student.id,
-                                    tutorId: session.tutor.id,
-                                    startTime: session.startTime,
-                                    endTime: session.endTime
-                                })
-                            });
-
-                            if (conflictResponse.ok) {
-                                const conflictResult = await conflictResponse.json();
-                                session.hasConflict = conflictResult.hasConflict;
-                                session.conflictDescription = conflictResult.conflictDescription;
-                            } else {
-                                session.hasConflict = false;
-                                session.conflictDescription = '';
-                            }
-                        } catch (error) {
-                            console.error('Error checking conflict for session:', session.id, error);
-                            session.hasConflict = false;
-                            session.conflictDescription = '';
-                        }
-                        return session;
-                    })
-                );
-
-                displayPendingSessionsWithConflicts(sessionsWithConflicts);
-                console.log('Pending sessions with conflict detection loaded and displayed');
-
-            } else {
-                const errorText = await response.text();
-                console.error('API Error response:', errorText);
-            }
-        } catch (error) {
-            console.error('Error loading pending sessions:', error);
-            console.error('Error details:', error.stack);
-        }
-    }
-
-    function displayUpcomingSessions(sessions) {
-        const container = document.getElementById('upcomingSessionsList');
-        const emptyState = document.getElementById('emptyUpcoming');
-        const section = document.getElementById('upcomingSessionsSection');
-
-        if (sessions.length === 0) {
-            container.style.display = 'none';
-            emptyState.style.display = 'block';
-            section.classList.remove('has-content');
-        } else {
-            container.style.display = 'block';
-            emptyState.style.display = 'none';
-            section.classList.add('has-content');
-
-            // Sort sessions by start time (earliest first)
-            const sortedSessions = sessions.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
-
-            container.innerHTML = sortedSessions.map(session => `
-                <div class="session-item">
-                    <div class="session-info">
-                        <h4>${session.subject}</h4>
-                        <div class="session-time">
-                            ${formatDateTime(session.startTime)}
-                        </div>
-                        <div class="session-time">
-                            with ${currentUser.role === 'TUTOR' ? session.student.name : session.tutor.name}
-                        </div>
-                    </div>
-                    <span class="session-status status-${session.status.toLowerCase()}">
-                        ${session.status}
-                    </span>
-                </div>
-            `).join('');
-        }
-    }
-
-    function displayPendingSessionsWithConflicts(sessions) {
-        const container = document.getElementById('pendingSessionsList');
-        const section = document.getElementById('pendingSessions');
-
-        console.log('===== DISPLAYING PENDING SESSIONS WITH CONFLICTS =====');
-        console.log('   Container found:', !!container);
-        console.log('   Sessions to display:', sessions.length);
-
-        if (!container) {
-            console.error('Pending sessions container not found!');
-            return;
-        }
-
-        if (sessions.length === 0) {
-            console.log('No pending sessions to display');
-            container.innerHTML = `
-            <div class="empty-state">
-                <div class="icon">All Clear</div>
-                <p>No pending requests</p>
-                <p style="font-size: 0.9rem;">All caught up!</p>
-            </div>
-        `;
-            section.classList.remove('has-content');
-            return;
-        }
-
-        console.log('Rendering', sessions.length, 'pending sessions with conflict detection');
-
-        const html = sessions.map((session, index) => {
-            const hasConflict = session.hasConflict ||
-                (session.sessionNotes && session.sessionNotes.includes('CONFLICT')) ||
-                (session.conflictDescription && session.conflictDescription.length > 0) ||
-                (Math.random() < 0.5);
-
-            return `
-            <div class="session-item" style="align-items: flex-start; padding: 1.25rem;">
-                <div class="session-info" style="flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 80px; padding-top: 0.75rem;">
-                    <h4 style="margin: 0;">${session.subject}</h4>
-                    <div class="session-time" style="margin-top: 0.5rem;">
-                        ${formatDateTime(session.startTime)}
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end; justify-content: flex-start; min-height: 80px; padding-top: 0.5rem;">
-                    <span class="session-status status-pending" style="margin: 0;">
-                        PENDING
-                    </span>
-                    <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
-                    ${hasConflict ? `
-                        <button class="reject-btn" onclick="cancelSession(${session.id}, true)" style="font-size: 0.8rem; padding: 0.4rem 0.75rem;">
-                            Reject
-                        </button>
-                    ` : `
-<button onclick="confirmSession(${session.id})" style="padding: 0.4rem 0.75rem; background: #d4edda; color: #155724; border: none; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.3s ease; letter-spacing: -0.01em;">                            Accept
-                        </button>
-
-
-
-                        <button class="reject-btn" onclick="cancelSession(${session.id})" style="font-size: 0.8rem; padding: 0.4rem 0.75rem;">
-                            Reject
-                        </button>
-                    `}
-                    </div>
-                </div>
-            </div>
-        `;
-        }).join('');
-
-        container.innerHTML = html;
-        section.classList.add('has-content');
-        console.log('Pending sessions with conflicts HTML rendered');
-    }
-
     function displayRecentSessions(sessions) {
         console.log('Displaying recent sessions:', sessions);
         console.log('Current user role:', currentUser.role);
@@ -1947,8 +1137,9 @@
             return;
         }
 
+        // FIXED LOGIC: Check if user is TUTOR and show Accept/Decline buttons for PENDING sessions ONLY
         if (currentUser.role === 'TUTOR') {
-            console.log('Displaying for tutor');
+            console.log('Displaying for tutor with action buttons for pending sessions');
             container.innerHTML = sessions.map(session => `
                 <div class="session-item">
                     <div class="session-info">
@@ -1959,15 +1150,22 @@
                         <div class="session-time">
                             with ${session.student.name}
                         </div>
-                        ${session.studentNotes ? `<div style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">"${session.studentNotes.replace(/⚠️\s*/g, '')}"</div>` : ''}
+                        ${session.studentNotes && !session.studentNotes.includes('Booked from available times') ? `<div style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">"${session.studentNotes.replace(/⚠️.*$/g, '').trim()}"</div>` : ''}
                     </div>
-                    <span class="session-status status-${session.status.toLowerCase()}">
-                        ${session.status}
-                    </span>
+                    ${session.status === 'PENDING' ? `
+                        <div class="session-actions">
+                            <button class="accept-btn" onclick="acceptSession(${session.id})">Accept</button>
+                            <button class="reject-btn" onclick="declineSession(${session.id})">Decline</button>
+                        </div>
+                    ` : `
+                        <span class="session-status status-${session.status.toLowerCase()}">
+                            ${session.status}
+                        </span>
+                    `}
                 </div>
             `).join('');
         } else {
-            console.log('Displaying for student');
+            console.log('Displaying for student - no action buttons needed');
             container.innerHTML = sessions.map(session => `
                 <div class="session-item">
                     <div class="session-info">
@@ -1987,67 +1185,47 @@
         }
     }
 
-    async function confirmSession(sessionId) {
-        console.log('Confirming session:', sessionId);
-
-        if (confirm('Accept this session request?')) {
-            try {
-                const response = await fetch(`${API_BASE}/sessions/${sessionId}/confirm`, {
-                    method: 'PUT'
-                });
-
-                if (response.ok) {
-                    console.log('Session confirmed, reloading dashboard data');
-                    await loadDashboardData();
-                } else {
-                    const errorText = await response.text();
-                    console.error('Failed to confirm session:', errorText);
-                }
-            } catch (error) {
-                console.error('Error confirming session:', error);
-            }
-        }
-    }
-
-    async function cancelSession(sessionId, isConflict = false) {
-        console.log('Cancelling session:', sessionId, 'isConflict:', isConflict);
-
-        if (isConflict) {
-            try {
-                const response = await fetch(`${API_BASE}/sessions/${sessionId}/cancel?reason=${encodeURIComponent('Rejected due to schedule conflict')}`, {
-                    method: 'PUT'
-                });
-
-                if (response.ok) {
-                    await loadDashboardData();
-                } else {
-                    const errorText = await response.text();
-                    console.error('Failed to reject session:', errorText);
-                }
-            } catch (error) {
-                console.error('Error rejecting session:', error);
-            }
-            return;
-        }
-
-        const reason = prompt('Optional: Provide a reason for rejection');
-        if (!confirm('Reject this session request?')) {
-            return;
-        }
+    // FIXED FUNCTIONS: Accept and Decline with proper API calls
+    async function acceptSession(sessionId) {
+        console.log('Accepting session:', sessionId);
 
         try {
-            const response = await fetch(`${API_BASE}/sessions/${sessionId}/cancel?reason=${encodeURIComponent(reason || '')}`, {
+            const response = await fetch(`${API_BASE}/sessions/${sessionId}/confirm`, {
                 method: 'PUT'
             });
 
             if (response.ok) {
-                await loadDashboardData();
+                console.log('Session accepted successfully');
+                // Reload sessions to show updated status
+                await loadSessionStats();
             } else {
                 const errorText = await response.text();
-                console.error('Failed to cancel session:', errorText);
+                console.error('Failed to accept session:', errorText);
+                showAlert('Failed to accept session', 'error');
             }
         } catch (error) {
-            console.error('Error cancelling session:', error);
+            console.error('Error accepting session:', error);
+            showAlert('Error accepting session', 'error');
+        }
+    }
+
+    async function declineSession(sessionId) {
+        console.log('Declining session:', sessionId);
+
+        try {
+            const response = await fetch(`${API_BASE}/sessions/${sessionId}/cancel`, {
+                method: 'PUT'
+            });
+
+            if (response.ok) {
+                console.log('Session declined successfully');
+                await loadSessionStats();
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to decline session:', errorText);
+            }
+        } catch (error) {
+            console.error('Error declining session:', error);
         }
     }
 
@@ -2169,9 +1347,11 @@
                 } else {
                     const errorText = await response.text();
                     console.error('Booking failed:', errorText);
+                    showAlert('Failed to book session', 'error');
                 }
             } catch (error) {
                 console.error('Error booking session:', error);
+                showAlert('Error booking session', 'error');
             }
         }
     }
@@ -2281,26 +1461,18 @@
                                                ${currentUser.role === 'TUTOR' ? 'Student: ' + session.student.name : 'Tutor: ' + session.tutor.name}
                                            </div>
                                            ${session.location ? `<div style="color: #4a5568; font-size: 0.9rem; margin-bottom: 0.25rem;">${session.location}</div>` : ''}
-                                           ${session.studentNotes ? `<div style="color: #4a5568; font-style: italic; margin-top: 0.5rem; font-size: 0.85rem;">"${session.studentNotes}"</div>` : ''}
-                                           ${session.sessionNotes ? `<div style="color: #4a5568; font-style: italic; margin-top: 0.5rem; font-size: 0.85rem;">${session.sessionNotes.replace(/⚠️\s*/g, '')}</div>` : ''}
+                                           ${session.studentNotes && !session.studentNotes.includes('Booked from available times') ? `<div style="color: #4a5568; font-style: italic; margin-top: 0.5rem; font-size: 0.85rem;">"${session.studentNotes.replace(/⚠️.*$/g, '').trim()}"</div>` : ''}
+                                           ${session.sessionNotes && !session.sessionNotes.includes('Booked from available times') ? `<div style="color: #4a5568; font-style: italic; margin-top: 0.5rem; font-size: 0.85rem;">"${session.sessionNotes.replace(/⚠️.*$/g, '').trim()}"</div>` : ''}
                                        </div>
                                        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-left: 1rem;">
-                                           <span class="session-status status-${session.status.toLowerCase()}" style="padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; white-space: nowrap;">
+                                           <span class="session-status status-${session.status.toLowerCase()}" style="padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; white-space: nowrap; ${session.status === 'PENDING' ? 'min-width: 120px; display: inline-block;' : ''}">
                                                ${session.status}
                                            </span>
                                            ${status === 'pending' && currentUser.role === 'TUTOR' ? `
-                                               <button onclick="confirmSessionInModal(${session.id})" class="accept-btn" style="padding: 0.5rem 0.75rem; background: #059669; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
-                                                   Confirm
-                                               </button>
-                                               <button onclick="cancelSessionInModal(${session.id})" class="reject-btn" style="padding: 0.5rem 0.75rem; background: #f9fafb; color: #4a5568; border: 1px solid #e5e7eb; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
-                                                   Cancel
-                                               </button>
-                                           ` : ''}
-                                           ${status === 'pending' && currentUser.role === 'TUTEE' && session.sessionNotes && session.sessionNotes.includes('TUTOR_INITIATED') ? `
-                                               <button onclick="acceptTutorOfferInModal(${session.id})" class="accept-btn" style="padding: 0.5rem 0.75rem; background: #059669; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
+                                               <button onclick="acceptSessionInModal(${session.id})" class="accept-btn" style="padding: 0.5rem 0.75rem; background: #d4edda; color: #155724; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
                                                    Accept
                                                </button>
-                                               <button onclick="declineTutorOfferInModal(${session.id})" class="reject-btn" style="padding: 0.5rem 0.75rem; background: #f9fafb; color: #4a5568; border: 1px solid #e5e7eb; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
+                                               <button onclick="declineSessionInModal(${session.id})" class="reject-btn" style="padding: 0.5rem 0.75rem; background: #f8d7da; color: #721c24; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
                                                    Decline
                                                </button>
                                            ` : ''}
@@ -2315,42 +1487,15 @@
        `;
     }
 
-    function getStatusColor(status) {
-        switch(status) {
-            case 'PENDING': return '#ffc107';
-            case 'CONFIRMED': return '#28a745';
-            case 'COMPLETED': return '#17a2b8';
-            case 'CANCELLED': return '#dc3545';
-            default: return '#6c757d';
-        }
+    // Modal action functions
+    async function acceptSessionInModal(sessionId) {
+        await acceptSession(sessionId);
+        await loadSessionsForModal(); // Refresh modal content
     }
 
-    function formatTime(dateTimeString) {
-        const date = new Date(dateTimeString);
-        return date.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-
-    async function confirmSessionInModal(sessionId) {
-        await confirmSession(sessionId);
-        await loadSessionsForModal();
-    }
-
-    async function cancelSessionInModal(sessionId) {
-        await cancelSession(sessionId);
-        await loadSessionsForModal();
-    }
-
-    async function acceptTutorOfferInModal(sessionId) {
-        await acceptTutorOffer(sessionId);
-        await loadSessionsForModal();
-    }
-
-    async function declineTutorOfferInModal(sessionId) {
-        await declineTutorOffer(sessionId);
-        await loadSessionsForModal();
+    async function declineSessionInModal(sessionId) {
+        await declineSession(sessionId);
+        await loadSessionsForModal(); // Refresh modal content
     }
 
     function closeSessionsModal() {
@@ -2360,51 +1505,12 @@
         }
     }
 
-    async function debugPendingSessions() {
-        if (!currentUser || currentUser.role !== 'TUTOR') {
-            console.log('Not a tutor or no current user');
-            return;
-        }
-
-        console.log('===== COMPREHENSIVE DEBUG: PENDING SESSIONS =====');
-        console.log('Current user:', currentUser);
-        console.log('User ID:', currentUser.id);
-        console.log('User Role:', currentUser.role);
-
-        try {
-            console.log('Testing regular pending endpoint...');
-            const regularResponse = await fetch(`${API_BASE}/sessions/tutor/${currentUser.id}/pending`);
-            console.log('Regular response status:', regularResponse.status);
-
-            if (regularResponse.ok) {
-                const regularSessions = await regularResponse.json();
-                console.log('Regular endpoint returned:', regularSessions.length, 'sessions');
-                console.log('Regular sessions:', regularSessions);
-            } else {
-                console.log('Regular endpoint failed:', await regularResponse.text());
-            }
-
-            console.log('Testing all sessions endpoint...');
-            const allResponse = await fetch(`${API_BASE}/sessions/tutor/${currentUser.id}`);
-            console.log('All sessions response status:', allResponse.status);
-
-            if (allResponse.ok) {
-                const allSessions = await allResponse.json();
-                console.log('All sessions endpoint returned:', allSessions.length, 'sessions');
-                console.log('All sessions:', allSessions);
-
-                const pendingManual = allSessions.filter(s => s.status === 'PENDING');
-                console.log('Manual pending filter found:', pendingManual.length, 'sessions');
-                console.log('Manual pending sessions:', pendingManual);
-            } else {
-                console.log('All sessions endpoint failed:', await allResponse.text());
-            }
-
-        } catch (error) {
-            console.error('Debug error:', error);
-        }
-
-        console.log('===== DEBUG COMPLETE =====');
+    function formatTime(dateTimeString) {
+        const date = new Date(dateTimeString);
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
     }
 
     function formatDateTime(dateTimeString) {
@@ -2500,15 +1606,11 @@
         }
     }
 
+    // Auto-refresh every 30 seconds
     setInterval(async () => {
         console.log('Auto-refreshing dashboard...');
         try {
-            if (currentUser.role === 'TUTOR') {
-                await loadPendingSessions();
-            } else {
-                await loadPendingOffers();
-            }
-            updateSidebarVisibility();
+            await loadSessionStats();
         } catch (error) {
             console.error('Auto-refresh error:', error);
         }
@@ -2554,7 +1656,7 @@
         showAlert('An unexpected error occurred. Please refresh the page.', 'error');
     });
 
-    console.log('Dashboard script initialization complete with conflict detection');
+    console.log('Dashboard script initialization complete - fixed accept/decline logic');
 </script>
 </body>
 </html>

@@ -23,7 +23,7 @@ public class Tutor {
     @ElementCollection
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "tutor_subjects", joinColumns = @JoinColumn(name = "tutor_id"))
-    @Column(name = "subject")
+    @Column(name = "subject", length = 50)  // ADD THIS LENGTH
     private List<Subject> subjects;
 
     @ElementCollection

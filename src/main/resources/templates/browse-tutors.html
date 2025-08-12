@@ -1020,11 +1020,41 @@
         }
     }
 
+
+
     function createTutorCard(tutor) {
+        // Map the enum names to display course code and name
+        const subjectDisplayMap = {
+            'CORP_FIN': { code: 'lecge1108', name: 'Économie politique' },
+            'MARKETING': { code: 'ling1108', name: 'Marketing' },
+            'MATH_ANAL': { code: 'ling1114', name: 'Introduction à la modélisation mathématiques : analyse' },
+            'CHEM_ENV1': { code: 'ling1115', name: 'Chimie et environnement I' },
+            'FIN_ACC': { code: 'ling1107', name: 'Comptabilité financière et analyse des états financiers' },
+            'DATA_PROB': { code: 'ling1113', name: 'Analyse de données : Probabilités' },
+            'MATH_ALG': { code: 'ling1121', name: 'Introduction à la modélisation mathématique : algèbre' },
+            'PHYS_EN1': { code: 'ling1122', name: 'Physique et énergie I' },
+            'ENGLISH1': { code: 'lang1330', name: 'Anglais niveau moyen 1ère partie' },
+            'MACRO': { code: 'lecge1212', name: 'Macroéconomie' },
+            'MICRO': { code: 'lecge1222', name: 'Microéconomie' },
+            'DATA_STAT': { code: 'ling1214', name: 'Analyse de données : Statistiques' },
+            'PROG_ECO': { code: 'ling1225', name: 'Programmation en économie et gestion' },
+            'PHYS_EN2': { code: 'ling1213', name: 'Physique et énergie II' },
+            'LAW_BUS': { code: 'lespo1221', name: 'Droit, entreprise et fiscalité' },
+            'MGMT_SCI': { code: 'ling1216', name: 'Management sciences : modèles déterministes' },
+            'CHEM_ENV2': { code: 'ling1223', name: 'Chimie et environnement II' },
+            'DIGI_ECO': { code: 'lecge1303', name: 'Digital economics' },
+            'BIG_DATA': { code: 'lecge1301', name: 'Analyse de données : nouvelles méthodes (Big Data, IA)' },
+            'TECH_DEV1': { code: 'ling1317', name: 'Recherche et développement technologique : énergie, électronique et télécommunications' },
+            'ECO_HIST': { code: 'lecge1217', name: 'History of Economic Theory' },
+            'FIN_INFO': { code: 'ling1322', name: 'Finance and information systems' },
+            'TECH_DEV2': { code: 'ling1327', name: 'Recherche et développement technologique : mécanique, procédés chimiques et matériaux' }
+        };
+
         const gradeDisplays = tutor.grades ? Object.entries(tutor.grades).map(([subject, grade]) => {
+            const subjectDisplay = subjectDisplayMap[subject] || { code: subject.toLowerCase(), name: subject.replace(/_/g, ' ') };
             const gradeText = grade === 'first_try' ? 'First Try' : 'After Retake';
             const badgeClass = grade === 'first_try' ? 'badge-excellent' : 'badge-good';
-            return `<span class="expertise-badge ${badgeClass}">${subject.replace(/_/g, ' ')}: ${gradeText}</span>`;
+            return `<span class="expertise-badge ${badgeClass}">${subjectDisplay.code}: ${gradeText}</span>`;
         }).join('') : '';
 
         return `
@@ -1039,9 +1069,10 @@
         <div class="tutor-subjects">
           <h4>Subjects</h4>
           <div class="subjects-list">
-            ${tutor.subjects.map(subject =>
-            `<span class="subject-tag">${subject.replace(/_/g, ' ')}</span>`
-        ).join('')}
+            ${tutor.subjects.map(subject => {
+            const display = subjectDisplayMap[subject] || { code: subject.toLowerCase(), name: subject.replace(/_/g, ' ') };
+            return `<span class="subject-tag">${display.code} - ${display.name}</span>`;
+        }).join('')}
           </div>
           ${gradeDisplays ? `<div class="expertise-badges">${gradeDisplays}</div>` : ''}
         </div>
@@ -1072,6 +1103,9 @@
       </div>
     `;
     }
+
+
+
 
     function contactTutor(tutorId, tutorName) {
         console.log('Contacting tutor:', tutorName, 'ID:', tutorId);
@@ -1251,15 +1285,51 @@
         }
     }
 
+
+
     function populateSubjectDropdown(subjects) {
+        const subjectDisplayMap = {
+            'CORP_FIN': { code: 'lecge1108', name: 'Économie politique' },
+            'MARKETING': { code: 'ling1108', name: 'Marketing' },
+            'MATH_ANAL': { code: 'ling1114', name: 'Introduction à la modélisation mathématiques : analyse' },
+            'CHEM_ENV1': { code: 'ling1115', name: 'Chimie et environnement I' },
+            'FIN_ACC': { code: 'ling1107', name: 'Comptabilité financière et analyse des états financiers' },
+            'DATA_PROB': { code: 'ling1113', name: 'Analyse de données : Probabilités' },
+            'MATH_ALG': { code: 'ling1121', name: 'Introduction à la modélisation mathématique : algèbre' },
+            'PHYS_EN1': { code: 'ling1122', name: 'Physique et énergie I' },
+            'ENGLISH1': { code: 'lang1330', name: 'Anglais niveau moyen 1ère partie' },
+            'MACRO': { code: 'lecge1212', name: 'Macroéconomie' },
+            'MICRO': { code: 'lecge1222', name: 'Microéconomie' },
+            'DATA_STAT': { code: 'ling1214', name: 'Analyse de données : Statistiques' },
+            'PROG_ECO': { code: 'ling1225', name: 'Programmation en économie et gestion' },
+            'PHYS_EN2': { code: 'ling1213', name: 'Physique et énergie II' },
+            'LAW_BUS': { code: 'lespo1221', name: 'Droit, entreprise et fiscalité' },
+            'MGMT_SCI': { code: 'ling1216', name: 'Management sciences : modèles déterministes' },
+            'CHEM_ENV2': { code: 'ling1223', name: 'Chimie et environnement II' },
+            'DIGI_ECO': { code: 'lecge1303', name: 'Digital economics' },
+            'BIG_DATA': { code: 'lecge1301', name: 'Analyse de données : nouvelles méthodes (Big Data, IA)' },
+            'TECH_DEV1': { code: 'ling1317', name: 'Recherche et développement technologique : énergie, électronique et télécommunications' },
+            'ECO_HIST': { code: 'lecge1217', name: 'History of Economic Theory' },
+            'FIN_INFO': { code: 'ling1322', name: 'Finance and information systems' },
+            'TECH_DEV2': { code: 'ling1327', name: 'Recherche et développement technologique : mécanique, procédés chimiques et matériaux' }
+        };
+
         const select = document.getElementById('sessionSubject');
         if (subjects.length > 0) {
             select.innerHTML = '<option value="">Select a subject</option>' +
-                subjects.map(subject => `<option value="${subject}">${subject.replace(/_/g, ' ')}</option>`).join('');
+                subjects.map(subject => {
+                    const display = subjectDisplayMap[subject] || { code: subject.toLowerCase(), name: subject.replace(/_/g, ' ') };
+                    return `<option value="${subject}">${display.code} - ${display.name}</option>`;
+                }).join('');
         } else {
             select.innerHTML = '<option value="">No subjects available</option>';
         }
     }
+
+
+
+
+
 
     async function submitBookingRequest() {
         const subject = document.getElementById('sessionSubject').value;

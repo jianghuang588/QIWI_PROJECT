@@ -22,7 +22,7 @@ public class Tutee {
     @ElementCollection
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "tutee_subjects", joinColumns = @JoinColumn(name = "tutee_id"))
-    @Column(name = "subject")
+    @Column(name = "subject", length = 50)  // ADD THIS LINE
     private List<Subject> subjectsNeeded;
 
     @NotBlank(message = "Personal introduction is required")

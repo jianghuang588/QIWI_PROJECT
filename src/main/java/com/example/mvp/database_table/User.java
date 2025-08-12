@@ -35,6 +35,16 @@ public class User {
     @Column(nullable = false)
     private UserRole role;
 
+    // ADD THESE NEW FIELDS
+    @Column(name = "course_code")
+    private String courseCode;
+
+    @Column(name = "course_name")
+    private String courseName;
+
+    @Column(name = "year_level")
+    private String yearLevel;
+
     @Column(name = "terms_accepted", nullable = false)
     private Boolean termsAccepted = false;
 
@@ -61,7 +71,7 @@ public class User {
         this.privacyAccepted = true;
     }
 
-    // Getters and Setters
+    // Existing getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -76,6 +86,16 @@ public class User {
 
     public UserRole getRole() { return role; }
     public void setRole(UserRole role) { this.role = role; }
+
+    // ADD THESE NEW GETTERS AND SETTERS
+    public String getCourseCode() { return courseCode; }
+    public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+
+    public String getCourseName() { return courseName; }
+    public void setCourseName(String courseName) { this.courseName = courseName; }
+
+    public String getYearLevel() { return yearLevel; }
+    public void setYearLevel(String yearLevel) { this.yearLevel = yearLevel; }
 
     public Boolean getTermsAccepted() { return termsAccepted; }
     public void setTermsAccepted(Boolean termsAccepted) { this.termsAccepted = termsAccepted; }
