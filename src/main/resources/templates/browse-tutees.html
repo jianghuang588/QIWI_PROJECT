@@ -887,23 +887,23 @@
             }
         });
 
-        // Get unique subjects from tutees
-        const uniqueSubjects = [...new Set(allTutees.flatMap(tutee => tutee.subjectsNeeded || []))];
+        // Show ALL course subjects in dropdown
+        const allCourseSubjects = Object.keys(subjectData);
         const subjectFilter = document.getElementById('subjectFilter');
 
         // Clear existing options except "All Subjects"
         subjectFilter.innerHTML = '<option value="">All Subjects</option>';
-        uniqueSubjects.forEach(subject => {
-            if (subject) {
-                const option = document.createElement('option');
-                option.value = subject;
-                const display = subjectData[subject] || { code: subject.toLowerCase(), name: subject.replace(/_/g, ' ') };
-                option.textContent = `${display.code} - ${display.name}`;
-                subjectFilter.appendChild(option);
-            }
+        allCourseSubjects.forEach(subject => {
+            const option = document.createElement('option');
+            option.value = subject;
+            const display = subjectData[subject];
+            option.textContent = `${display.code} - ${display.name}`;
+            subjectFilter.appendChild(option);
         });
 
-        console.log('Filter options populated:', { uniqueMajors, uniqueSubjects });
+
+
+        console.log('Filter options populated:', { uniqueMajors, allCourseSubjects });
     }
 
 

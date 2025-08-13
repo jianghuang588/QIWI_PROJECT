@@ -977,22 +977,74 @@
         }
     }
 
+
+
     function populateFilters() {
         const majorFilter = document.getElementById('majorFilter');
         const subjectFilter = document.getElementById('subjectFilter');
 
-        // Get unique majors and subjects
+        // Get unique majors from tutors
         const majors = [...new Set(allTutors.map(t => t.major))].sort();
-        const subjects = [...new Set(allTutors.flatMap(t => t.subjects))].sort();
+
+        // Updated subjects based on your course chart
+        const courseSubjects = [
+            // Bac 1 - Q1
+            'CORP_FIN', 'MARKETING', 'MATH_ANAL', 'CHEM_ENV1',
+            // Bac 1 - Q2
+            'FIN_ACC', 'DATA_PROB', 'MATH_ALG',
+            // Bac 1 - Q1&Q2
+            'PHYS_EN1', 'ENGLISH1',
+            // Bac 2 - Q1
+            'MACRO', 'MICRO', 'DATA_STAT', 'PROG_ECO', 'PHYS_EN2', 'LAW_BUS',
+            // Bac 2 - Q2
+            'MGMT_SCI', 'CHEM_ENV2',
+            // Bac 3 - Q1
+            'DIGI_ECO', 'BIG_DATA', 'TECH_DEV1', 'ECO_HIST',
+            // Bac 3 - Q2
+            'FIN_INFO', 'TECH_DEV2'
+        ];
+
+        // Subject display mapping from your chart
+        const subjectDisplayMap = {
+            'CORP_FIN': { code: 'lecge1108', name: 'Économie politique' },
+            'MARKETING': { code: 'ling1108', name: 'Marketing' },
+            'MATH_ANAL': { code: 'ling1114', name: 'Introduction à la modélisation mathématiques : analyse' },
+            'CHEM_ENV1': { code: 'ling1115', name: 'Chimie et environnement I' },
+            'FIN_ACC': { code: 'ling1107', name: 'Comptabilité financière et analyse des états financiers' },
+            'DATA_PROB': { code: 'ling1113', name: 'Analyse de données : Probabilités' },
+            'MATH_ALG': { code: 'ling1121', name: 'Introduction à la modélisation mathématique : algèbre' },
+            'PHYS_EN1': { code: 'ling1122', name: 'Physique et énergie I' },
+            'ENGLISH1': { code: 'lang1330', name: 'Anglais niveau moyen 1ère partie' },
+            'MACRO': { code: 'lecge1212', name: 'Macroéconomie' },
+            'MICRO': { code: 'lecge1222', name: 'Microéconomie' },
+            'DATA_STAT': { code: 'ling1214', name: 'Analyse de données : Statistiques' },
+            'PROG_ECO': { code: 'ling1225', name: 'Programmation en économie et gestion' },
+            'PHYS_EN2': { code: 'ling1213', name: 'Physique et énergie II' },
+            'LAW_BUS': { code: 'lespo1221', name: 'Droit, entreprise et fiscalité' },
+            'MGMT_SCI': { code: 'ling1216', name: 'Management sciences : modèles déterministes' },
+            'CHEM_ENV2': { code: 'ling1223', name: 'Chimie et environnement II' },
+            'DIGI_ECO': { code: 'lecge1303', name: 'Digital economics' },
+            'BIG_DATA': { code: 'lecge1301', name: 'Analyse de données : nouvelles méthodes (Big Data, IA)' },
+            'TECH_DEV1': { code: 'ling1317', name: 'Recherche et développement technologique : énergie, électronique et télécommunications' },
+            'ECO_HIST': { code: 'lecge1217', name: 'History of Economic Theory' },
+            'FIN_INFO': { code: 'ling1322', name: 'Finance and information systems' },
+            'TECH_DEV2': { code: 'ling1327', name: 'Recherche et développement technologique : mécanique, procédés chimiques et matériaux' }
+        };
 
         // Populate major filter
         majorFilter.innerHTML = '<option value="">All Majors</option>' +
             majors.map(major => `<option value="${major}">${major.replace(/_/g, ' ')}</option>`).join('');
 
-        // Populate subject filter
+        // Populate subject filter using courseSubjects order
         subjectFilter.innerHTML = '<option value="">All Subjects</option>' +
-            subjects.map(subject => `<option value="${subject}">${subject.replace(/_/g, ' ')}</option>`).join('');
+            courseSubjects.map(subject => {
+                const display = subjectDisplayMap[subject] || { code: subject.toLowerCase(), name: subject.replace(/_/g, ' ') };
+                return `<option value="${subject}">${display.code} - ${display.name}</option>`;
+            }).join('');
     }
+
+
+
 
     function displayTutors(tutors) {
         const grid = document.getElementById('tutorsGrid');

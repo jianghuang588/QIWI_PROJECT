@@ -29,9 +29,13 @@ public class TuteeService {
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // Set user role to TUTEE if not already (allow role change)
         if (user.getRole() != UserRole.TUTEE) {
-            throw new RuntimeException("User is not a tutee");
+            user.setRole(UserRole.TUTEE);
+            userRepository.save(user);
         }
+
+
 
         // Check if tutee profile already exists
         Optional<Tutee> existingTutee = tuteeRepository.findByUserId(dto.getUserId());
