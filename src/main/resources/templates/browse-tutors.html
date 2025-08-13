@@ -140,6 +140,19 @@
             transform: translateY(-1px);
         }
 
+        .user-initial {
+            background: #f4d1ae;
+            color: #3d3f5c;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
         .user-dropdown-menu {
             position: absolute;
             top: 100%;
@@ -740,6 +753,7 @@
             <div class="user-info">
                 <div class="user-dropdown">
                     <button class="user-menu-btn" onclick="toggleUserMenu()">
+                        <div class="user-initial" id="userInitial">U</div>
                         <span id="userName">User</span>
                     </button>
                     <div class="user-dropdown-menu" id="userDropdownMenu">
@@ -895,10 +909,16 @@
         // Update user display elements
         const userName = document.getElementById('userName');
         const userRoleBadge = document.getElementById('userRoleBadge');
+        const userInitial = document.getElementById('userInitial');
 
         if (userName) {
             userName.textContent = currentUser.name || 'Student';
         }
+
+        if (userInitial) {
+            userInitial.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+        }
+
 
         if (userRoleBadge) {
             userRoleBadge.textContent = currentUser.role === 'TUTOR' ? 'Tutor' : 'Student';
@@ -907,6 +927,8 @@
         // Update navigation links
         updateNavigationLinks();
     }
+
+
 
     function updateNavigationLinks() {
         const dashboardLink = document.getElementById('dashboardLink');
