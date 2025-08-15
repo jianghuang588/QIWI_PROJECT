@@ -345,55 +345,6 @@
             font-weight: 400;
         }
 
-        /* UNIVERSITIES LIST - Clean white consistent */
-        .universities-section {
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            animation: fadeInUp 0.6s ease 0.4s both;
-        }
-
-        .universities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-top: 0;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .university-card {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 6px;
-            text-align: center;
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-
-        .university-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-color: #cbd5e0;
-        }
-
-        .university-name {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.01em;
-        }
-
-        .university-location {
-            color: #4a5568;
-            font-size: 0.85rem;
-            font-weight: 400;
-        }
-
         /* CTA SECTION - Clean white consistent */
         .cta-section {
             background: white;
@@ -559,7 +510,7 @@
                 padding: 2rem 20px;
             }
 
-            .hero-section, .majors-section, .universities-section, .cta-section {
+            .hero-section, .majors-section, .cta-section {
                 padding: 2rem 1.5rem;
             }
 
@@ -576,10 +527,6 @@
                 gap: 1.5rem;
             }
 
-            .universities-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            }
-
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
@@ -592,18 +539,6 @@
 
             .footer-links {
                 flex-direction: column;
-                gap: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .universities-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                align-items: center;
                 gap: 1.5rem;
             }
         }
@@ -694,73 +629,6 @@
                 <p class="major-description">
                     Helping medical students excel in anatomy, physiology, pathology, clinical skills, and specialized medical coursework.
                 </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- UNIVERSITIES SECTION -->
-    <section class="universities-section">
-        <h2 class="section-title">Partner Universities</h2>
-
-        <div class="universities-grid">
-            <div class="university-card">
-                <div class="university-name">KU Leuven</div>
-                <div class="university-location">Leuven, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">University of Ghent</div>
-                <div class="university-location">Ghent, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">Vrije Universiteit Brussel</div>
-                <div class="university-location">Brussels, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">UCLouvain</div>
-                <div class="university-location">Louvain-la-Neuve, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">University of Antwerp</div>
-                <div class="university-location">Antwerp, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">Hasselt University</div>
-                <div class="university-location">Hasselt, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">University of Liège</div>
-                <div class="university-location">Liège, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">Université libre de Bruxelles</div>
-                <div class="university-location">Brussels, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">University of Mons</div>
-                <div class="university-location">Mons, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">Saint-Louis University</div>
-                <div class="university-location">Brussels, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">Thomas More University</div>
-                <div class="university-location">Antwerp, Belgium</div>
-            </div>
-
-            <div class="university-card">
-                <div class="university-name">Artesis Plantijn University</div>
-                <div class="university-location">Antwerp, Belgium</div>
             </div>
         </div>
     </section>
