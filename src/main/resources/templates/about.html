@@ -255,7 +255,7 @@
       flex: 1;
     }
 
-    /* HERO SECTION - Clean white consistent with privacy */
+    /* HERO SECTION */
     .hero-section {
       text-align: center;
       padding: 2.5rem 2rem;
@@ -286,111 +286,160 @@
       font-weight: 400;
     }
 
-    /* ABOUT SECTIONS - Clean white consistent */
-    .about-section {
+    /* CONTENT SECTIONS */
+    .content-section {
       background: white;
       border-radius: 12px;
-      padding: 2.5rem 2rem;
+      padding: 2.5rem;
       margin-bottom: 2rem;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       animation: fadeInUp 0.6s ease 0.2s both;
     }
 
     .section-title {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: 600;
       color: #2d3748;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       letter-spacing: -0.01em;
     }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 0;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
+    .section-subtitle {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #374151;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
     }
 
-    .about-card {
-      background: white;
-      padding: 1.5rem;
+    .content-text {
+      color: #4a5568;
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    /* TEAM GRID */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .team-member {
+      background: #fafafa;
       border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
       border: 1px solid #e5e7eb;
       transition: all 0.3s ease;
     }
 
-    .about-card:hover {
+    .team-member:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      border-color: #cbd5e0;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     }
 
-    .card-title {
+    .member-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    .member-name {
       font-size: 1.1rem;
       font-weight: 600;
       color: #2d3748;
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
     }
 
-    .card-description {
-      color: #4a5568;
+    .member-role {
       font-size: 0.9rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-      font-weight: 400;
+      color: #f4d1ae;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
     }
 
-    .card-list {
+    .member-description {
+      font-size: 0.9rem;
+      color: #6b7280;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .member-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .member-links a {
+      color: #6b7280;
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .member-links a:hover {
+      background: #f4d1ae;
+      color: white;
+      border-color: #f4d1ae;
+    }
+
+    /* FEATURE LIST */
+    .feature-list {
       list-style: none;
       padding: 0;
     }
 
-    .card-list li {
+    .feature-list li {
       position: relative;
-      padding-left: 1.5rem;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
       color: #4a5568;
-      margin-bottom: 0.5rem;
-      line-height: 1.5;
-      font-size: 0.9rem;
+      line-height: 1.6;
     }
 
-    .card-list li::before {
+    .feature-list li::before {
       content: "•";
       position: absolute;
-      left: 0;
-      color: #6b7280;
-      font-weight: 600;
+      left: 0.5rem;
+      color: #f4d1ae;
+      font-weight: bold;
+      font-size: 1.2rem;
     }
 
-    /* ALERTS */
-    .alert {
-      padding: 1rem 1.25rem;
+    /* NOTICE BOX */
+    .notice-box {
+      background: #fef9f3;
+      border: 1px solid #f4d1ae;
       border-radius: 8px;
-      margin: 1rem 0;
-      font-weight: 500;
-      border-left: 4px solid;
+      padding: 1.5rem;
+      margin-top: 2rem;
     }
 
-    .alert-success {
-      background: #f0fdf4;
-      color: #166534;
-      border-left-color: #22c55e;
+    .notice-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #92400e;
+      margin-bottom: 0.75rem;
     }
 
-    .alert-error {
-      background: #fef2f2;
-      color: #991b1b;
-      border-left-color: #ef4444;
-    }
-
-    .alert-info {
-      background: #eff6ff;
-      color: #1e40af;
-      border-left-color: #3b82f6;
+    .notice-text {
+      color: #78350f;
+      font-size: 0.9rem;
+      line-height: 1.6;
     }
 
     /* FOOTER */
@@ -455,7 +504,7 @@
         padding: 2rem 20px;
       }
 
-      .hero-section, .about-section {
+      .hero-section, .content-section {
         padding: 2rem 1.5rem;
       }
 
@@ -467,21 +516,12 @@
         font-size: 1.25rem;
       }
 
-      .about-grid {
+      .team-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
       }
 
       .footer-links {
         flex-direction: column;
-        gap: 1.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .footer-links {
-        flex-direction: column;
-        align-items: center;
         gap: 1.5rem;
       }
     }
@@ -544,116 +584,129 @@
   <section class="hero-section">
     <h1 class="hero-title">About Qiwi</h1>
     <p class="hero-subtitle">
-      The essential support platform for university students, built by students for students.
+      Building one platform where everything educational comes together
     </p>
   </section>
 
-  <!-- VISION & MISSION SECTION -->
-  <section class="about-section">
-    <h2 class="section-title">Our Vision & Mission</h2>
+  <!-- THE STORY SECTION -->
+  <section class="content-section">
+    <h2 class="section-title">The Story</h2>
 
-    <div class="about-grid">
-      <div class="about-card">
-        <h3 class="card-title">Our Vision</h3>
-        <p class="card-description">Be the essential support for all students in their studies, creating a comprehensive ecosystem where every university student can thrive academically.</p>
+    <p class="content-text">
+      QIWI was founded by students of UCLouvain, with the ambition to simplify academic life and bring structure to student support.
+    </p>
+
+    <p class="content-text">
+      The idea originated with Alexandre Goffin. After completing his bachelor's degree in Business Engineering at UCLouvain, he moved to New York for professional experience. When he returned to Belgium, he started offering tutoring lessons. It quickly became clear to him how fragmented the landscape was: plenty of students needed help, many others were willing to provide it, but there was no structured way to connect them effectively. Existing platforms were either too broad, too expensive, or poorly adapted to the reality of university-level courses.
+    </p>
+
+    <p class="content-text">
+      In April 2025, Alexandre began exploring the idea more seriously. What started as a simple observation slowly turned into a feasibility study. The early months were spent talking with fellow students and professors, gathering feedback, and sketching possible solutions. There were many uncertainties and setbacks along the way — from figuring out how to build trust between tutors and tutees, to imagining a platform that could stay simple while also being scalable. Each step, even the challenging ones, helped clarify the problem and confirm that there was real value in creating a better solution.
+    </p>
+
+    <p class="content-text">
+      Soon after, the project evolved into a team effort. Corentin, also a Business Engineering student at UCLouvain, joined as operations lead. He helped shape the structure and processes behind QIWI, ensuring that the idea could turn into something sustainable. On the technical side, Huang came on board, taking the responsibility of translating the vision into an actual product by developing the MVP. And finally, Karina, a fellow student at NYU, joined as communication lead.
+    </p>
+
+    <h3 class="section-subtitle">Our Team</h3>
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="member-photo">Photo</div>
+        <div class="member-name">Alexandre Goffin</div>
+        <div class="member-role">Founder & CEO</div>
+        <div class="member-description">Business Engineering student at UCLouvain with a vision to transform peer tutoring</div>
+        <div class="member-links">
+          <a href="#">LinkedIn</a>
+          <a href="#">Email</a>
+        </div>
       </div>
 
-      <div class="about-card">
-        <h3 class="card-title">Our Mission</h3>
-        <p class="card-description">We build an intuitive, all-inclusive platform that rewards work and collaboration for university students, fostering peer-to-peer learning and academic success.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CURRENT PLATFORM SECTION -->
-  <section class="about-section">
-    <h2 class="section-title">What We Do Now</h2>
-
-    <div class="about-grid">
-      <div class="about-card">
-        <h3 class="card-title">Peer-to-Peer Tutoring</h3>
-        <p class="card-description">Connect students who have succeeded in their courses with those who need help:</p>
-        <ul class="card-list">
-          <li>Direct messaging between tutors and tutees</li>
-          <li>Course-specific tutor matching</li>
-          <li>University email verification</li>
-          <li>Flexible scheduling and arrangements</li>
-        </ul>
+      <div class="team-member">
+        <div class="member-photo">Photo</div>
+        <div class="member-name">Corentin</div>
+        <div class="member-role">Operations Lead</div>
+        <div class="member-description">Business Engineering student at UCLouvain, building sustainable processes</div>
+        <div class="member-links">
+          <a href="#">LinkedIn</a>
+          <a href="#">Email</a>
+        </div>
       </div>
 
-      <div class="about-card">
-        <h3 class="card-title">Student-Run Platform</h3>
-        <p class="card-description">Built by students, for students, with a focus on authentic peer connections:</p>
-        <ul class="card-list">
-          <li>No payment processing (students arrange directly)</li>
-          <li>Focus on academic collaboration</li>
-          <li>University-specific communities</li>
-          <li>Simple, clean interface</li>
-        </ul>
+      <div class="team-member">
+        <div class="member-photo">Photo</div>
+        <div class="member-name">Huang</div>
+        <div class="member-role">Technical Lead</div>
+        <div class="member-description">Developer translating vision into reality through code</div>
+        <div class="member-links">
+          <a href="#">LinkedIn</a>
+          <a href="#">Email</a>
+        </div>
       </div>
 
-      <div class="about-card">
-        <h3 class="card-title">Data-Driven Improvements</h3>
-        <p class="card-description">We collect valuable insights to validate our approach:</p>
-        <ul class="card-list">
-          <li>User registration and engagement metrics</li>
-          <li>Tutor-to-tutee ratio analysis</li>
-          <li>Conversation patterns and success rates</li>
-          <li>User feedback and feature requests</li>
-        </ul>
-      </div>
-
-      <div class="about-card">
-        <h3 class="card-title">Academic Focus</h3>
-        <p class="card-description">Supporting students across multiple disciplines:</p>
-        <ul class="card-list">
-          <li>Business Engineering and Management</li>
-          <li>Economic Sciences and Finance</li>
-          <li>Medical Studies and Healthcare</li>
-          <li>Additional programs continuously added</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- DISCLAIMER SECTION -->
-  <section class="about-section">
-    <h2 class="section-title">Important Notice</h2>
-
-    <div class="about-grid">
-      <div class="about-card">
-        <h3 class="card-title">Student-Run Project</h3>
-        <p class="card-description">Qiwi is currently a student-run project focused on facilitating connections between university peers:</p>
-        <ul class="card-list">
-          <li>We do not intervene beyond matchmaking</li>
-          <li>All tutoring arrangements managed by students</li>
-          <li>No payment processing or dispute resolution</li>
-          <li>Focus on building academic community</li>
-        </ul>
-      </div>
-
-      <div class="about-card">
-        <h3 class="card-title">Data & Analytics</h3>
-        <p class="card-description">We collect usage data to improve our platform and validate our approach:</p>
-        <ul class="card-list">
-          <li>Conversations may be analyzed for insights</li>
-          <li>User engagement and success metrics</li>
-          <li>Platform improvement feedback</li>
-          <li>Academic demand validation research</li>
-        </ul>
+      <div class="team-member">
+        <div class="member-photo">Photo</div>
+        <div class="member-name">Karina</div>
+        <div class="member-role">Communication Lead</div>
+        <div class="member-description">NYU student connecting our message with students worldwide</div>
+        <div class="member-links">
+          <a href="#">LinkedIn</a>
+          <a href="#">Email</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FLASH MESSAGES -->
-  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-  <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
-  <div th:if="${info}" class="alert alert-info" th:text="${info}"></div>
+  <!-- THE PROJECT SECTION -->
+  <section class="content-section">
+    <h2 class="section-title">The Project</h2>
 
-  <!-- PAGE CONTENT -->
-  <div th:fragment="content">
-    <!-- Page-specific content will be inserted here -->
-  </div>
+    <p class="content-text">
+      At QIWI, we are building one platform where everything educational comes together.
+    </p>
+
+    <p class="content-text">
+      Our mission is simple: simplify students' lives so they can focus fully on what really matters — their studies, their growth, and their future.
+    </p>
+
+    <p class="content-text">
+      We believe education should not be fragmented across dozens of tools and services. QIWI integrates tutoring, resources, and academic support in one place. By doing so, we give students clarity, efficiency, and peace of mind.
+    </p>
+
+    <p class="content-text">
+      We are here for the long term. Strong education is the foundation of opportunity, and we aim to empower students worldwide to succeed in their classes while preparing for their careers.
+    </p>
+
+    <h3 class="section-subtitle">What We Do Now</h3>
+    <ul class="feature-list">
+      <li><strong>Peer-to-Peer Tutoring:</strong> Connecting students with proven success in their courses to those who need support, through direct matching and messaging.</li>
+      <li><strong>Academic Focus:</strong> Currently serving majors such as Business Engineering, Economics, and Medicine, with new programs being added continuously.</li>
+      <li><strong>Student Community:</strong> A platform built by students, for students, fostering authentic peer collaboration.</li>
+      <li><strong>Data & Feedback:</strong> Collecting insights on engagement, tutor-to-tutee ratios, and feature requests to refine the platform continuously.</li>
+    </ul>
+
+    <h3 class="section-subtitle">What's Next</h3>
+    <p class="content-text">
+      We are already working on features that will make QIWI more powerful and seamless. Without revealing every detail, here's what's ahead:
+    </p>
+    <ul class="feature-list">
+      <li>A more streamlined tutoring experience (with payments and scheduling integrated).</li>
+      <li>Expanded resources to support both learning and exam preparation.</li>
+      <li>New tools that move beyond tutoring to help students manage their academic journey as a whole.</li>
+    </ul>
+
+    <div class="notice-box">
+      <div class="notice-title">Important Notice</div>
+      <div class="notice-text">
+        QIWI is currently in its first stage of development and operates as a student-run project.
+        <ul class="feature-list" style="margin-top: 1rem;">
+          <li>Tutoring arrangements (scheduling, location, compensation) are managed directly between students until official systems launch.</li>
+          <li>From November onward, QIWI will begin handling pricing, payments, and conflict resolution to ensure safety and reliability.</li>
+          <li>Conversations on the platform may be analyzed for improvement and community protection.</li>
+          <li>All users are required to register with their official university email to ensure trust and authenticity.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 </main>
 
 <!-- FOOTER -->

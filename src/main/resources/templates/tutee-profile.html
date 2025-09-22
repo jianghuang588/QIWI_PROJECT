@@ -32,6 +32,118 @@
             }
         }
 
+        /* SUCCESS CHECKMARK ANIMATION */
+        @keyframes successPulse {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes drawCheck {
+            0% {
+                stroke-dashoffset: 100;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        .success-modal {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            animation: successPulse 0.5s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+
+        .success-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: successPulse 0.5s ease;
+        }
+
+        .success-checkmark {
+            width: 40px;
+            height: 40px;
+        }
+
+        .success-checkmark path {
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawCheck 0.5s ease 0.3s forwards;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message {
+            color: #4a5568;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-button {
+            background: #3d3f5c;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .success-button:hover {
+            background: #2d2f3c;
+            transform: translateY(-1px);
+        }
+
         .navbar {
             background: #3d3f5c;
             padding: 1.25rem 0;
@@ -509,6 +621,22 @@
     </style>
 </head>
 <body>
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+    <div class="success-modal">
+        <div class="success-icon">
+            <div class="success-circle">
+                <svg class="success-checkmark" viewBox="0 0 52 52">
+                    <path d="M14 27l10 10 20-20"/>
+                </svg>
+            </div>
+        </div>
+        <h2 class="success-title">Profile Saved!</h2>
+        <p class="success-message">Your student profile has been updated successfully.</p>
+        <button class="success-button" onclick="closeSuccessModal()">Continue</button>
+    </div>
+</div>
+
 <!-- Navigation -->
 <nav class="navbar">
     <div class="container">
@@ -760,10 +888,6 @@
         }).join('');
     }
 
-
-
-
-
     function clickSubjectItem(subject) {
         const checkbox = document.getElementById(`subject_${subject}`);
         checkbox.checked = !checkbox.checked;
@@ -867,7 +991,8 @@
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 }
 
-                // Just stay on the page - no alert or redirect
+                // Show success animation
+                showSuccessModal();
                 console.log('Profile saved successfully');
 
             } else {
@@ -880,6 +1005,14 @@
             showAlert('An error occurred. Please try again.', 'error');
         }
     });
+
+    function showSuccessModal() {
+        document.getElementById('successOverlay').classList.add('show');
+    }
+
+    function closeSuccessModal() {
+        document.getElementById('successOverlay').classList.remove('show');
+    }
 
     function showLoading() {
         document.getElementById('loading').style.display = 'block';

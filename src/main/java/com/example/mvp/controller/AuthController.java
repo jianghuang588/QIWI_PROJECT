@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// AuthController
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
@@ -33,6 +32,14 @@ public class AuthController {
         try {
             User user = userService.findByEmail(dto.getEmail())
                     .orElseThrow(() -> new RuntimeException("User not found"));
+
+            // Add password check
+            if (dto.getPassword() != null && user.getPassword() != null) {
+                if (!user.getPassword().equals(dto.getPassword())) {
+                    throw new RuntimeException("Invalid credentials");
+                }
+            }
+
             return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -265,7 +265,6 @@
       font-weight: 500;
     }
 
-    /* Hero Badge */
     .hero-badge {
       display: inline-block;
       background: linear-gradient(135deg, rgba(244, 209, 174, 0.15) 0%, rgba(244, 209, 174, 0.25) 100%);
@@ -301,7 +300,6 @@
 <body>
 <div class="login-container">
   <div class="logo-section">
-    <!-- Back to home link moved to top -->
     <div class="back-home">
       <a href="/" class="back-link">← Back to Home</a>
     </div>
@@ -317,12 +315,18 @@
     <p>Logging in...</p>
   </div>
 
-  <!-- Manual Login Form -->
   <form id="loginForm">
     <div class="form-group">
       <label for="email">University Email Address</label>
       <input type="email" id="email" name="email" class="form-control"
              placeholder="your.email@university.edu" required>
+    </div>
+
+    <!-- ADD PASSWORD FIELD -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" class="form-control"
+             placeholder="Enter your password" required>
     </div>
 
     <button type="submit" class="btn btn-primary">Sign In</button>
@@ -345,7 +349,6 @@
   }
 
   function showAlert(message, type = 'error') {
-    // Remove existing alerts
     const existingAlert = document.querySelector('.alert');
     if (existingAlert) {
       existingAlert.remove();
@@ -359,14 +362,14 @@
     form.parentNode.insertBefore(alertDiv, form);
   }
 
-  // Manual login form handler
   document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-    if (!email) {
-      showAlert('Please enter your email address');
+    if (!email || !password) {
+      showAlert('Please enter both email and password');
       return;
     }
 
@@ -378,7 +381,7 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, password })
       });
 
       hideLoading();
@@ -386,10 +389,8 @@
       if (response.ok) {
         const user = await response.json();
 
-        // Store user info
         localStorage.setItem('currentUser', JSON.stringify(user));
 
-        // Redirect based on user role or to dashboard
         if (user.role) {
           window.location.href = `/dashboard?userId=${user.id}&role=${user.role}`;
         } else {
@@ -397,7 +398,7 @@
         }
       } else {
         const errorText = await response.text();
-        showAlert(errorText || 'Login failed. Please check your email.');
+        showAlert(errorText || 'Login failed. Please check your email and password.');
       }
     } catch (error) {
       hideLoading();
@@ -406,7 +407,6 @@
     }
   });
 
-  // Check if user is already logged in
   window.addEventListener('load', function() {
     const currentUser = localStorage.getItem('currentUser');
     if (currentUser) {

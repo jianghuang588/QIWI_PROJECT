@@ -10,6 +10,11 @@ public class UserRegistrationDto {
     @NotBlank(message = "Name is required")
     private String name;
 
+    // ADD THESE NEW FIELDS
+    private String firstName;
+    private String lastName;
+    private String password;
+
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email is required")
     private String email;
@@ -20,7 +25,6 @@ public class UserRegistrationDto {
     @NotNull(message = "Role is required")
     private UserRole role;
 
-    // ADD THESE NEW FIELDS
     private String courseCode;
     private String courseName;
     private String yearLevel;
@@ -47,7 +51,6 @@ public class UserRegistrationDto {
     public UserRole getRole() { return role; }
     public void setRole(UserRole role) { this.role = role; }
 
-    // ADD THESE NEW GETTERS AND SETTERS
     public String getCourseCode() { return courseCode; }
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
 
@@ -62,4 +65,14 @@ public class UserRegistrationDto {
 
     public Boolean getPrivacyAccepted() { return privacyAccepted; }
     public void setPrivacyAccepted(Boolean privacyAccepted) { this.privacyAccepted = privacyAccepted; }
+
+    // ADD NEW GETTERS AND SETTERS
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }

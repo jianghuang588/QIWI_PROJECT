@@ -47,7 +47,6 @@
       margin-bottom: 2rem;
     }
 
-    /* Back to home link moved to top */
     .back-home {
       text-align: left;
       margin-bottom: 1.5rem;
@@ -73,7 +72,6 @@
       transform: translateX(-2px);
     }
 
-    /* Hero Badge */
     .hero-badge {
       display: inline-block;
       background: linear-gradient(135deg, rgba(244, 209, 174, 0.15) 0%, rgba(244, 209, 174, 0.25) 100%);
@@ -143,7 +141,6 @@
       gap: 1rem;
     }
 
-    /* ROLE SELECTION STYLING */
     .role-selection {
       margin: 2rem 0;
     }
@@ -398,7 +395,6 @@
 <body>
 <div class="register-container">
   <div class="logo-section">
-    <!-- Back to home link moved to top -->
     <div class="back-home">
       <a href="/" class="back-link">← Back to Home</a>
     </div>
@@ -415,16 +411,31 @@
   </div>
 
   <form id="registerForm">
-    <div class="form-group">
-      <label for="name">Full Name *</label>
-      <input type="text" id="name" name="name" class="form-control"
-             placeholder="Enter your full name" required>
+    <!-- ADD NEW NAME FIELDS IN A ROW -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="firstName">First Name *</label>
+        <input type="text" id="firstName" name="firstName" class="form-control"
+               placeholder="John" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name *</label>
+        <input type="text" id="lastName" name="lastName" class="form-control"
+               placeholder="Doe" required>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="email">University Email Address *</label>
       <input type="email" id="email" name="email" class="form-control"
              placeholder="your.email@university.edu" required>
+    </div>
+
+    <!-- ADD PASSWORD FIELD -->
+    <div class="form-group">
+      <label for="password">Password *</label>
+      <input type="password" id="password" name="password" class="form-control"
+             placeholder="Create a strong password" required>
     </div>
 
     <div class="form-group">
@@ -437,19 +448,16 @@
       </select>
     </div>
 
-    <!-- CLEAR ROLE SELECTION -->
     <div class="role-selection">
       <h3>What do you want to do on Qiwi? *</h3>
 
       <div class="role-options">
-        <!-- STUDENT OPTION -->
         <div class="role-card" onclick="selectRole('TUTEE')" id="tutee-card">
           <input type="radio" name="role" value="TUTEE" id="role-tutee">
           <div class="role-icon"></div>
           <div class="role-title">I'm a Student</div>
         </div>
 
-        <!-- TUTOR OPTION -->
         <div class="role-card" onclick="selectRole('TUTOR')" id="tutor-card">
           <input type="radio" name="role" value="TUTOR" id="role-tutor">
           <div class="role-icon"></div>
@@ -483,16 +491,13 @@
   function selectRole(role) {
     selectedRole = role;
 
-    // Remove previous selection
     document.querySelectorAll('.role-card').forEach(card => {
       card.classList.remove('selected');
     });
 
-    // Add selection to clicked card
     const cardId = role === 'TUTOR' ? 'tutor-card' : 'tutee-card';
     document.getElementById(cardId).classList.add('selected');
 
-    // Update radio button
     document.getElementById(`role-${role.toLowerCase()}`).checked = true;
   }
 
@@ -518,22 +523,29 @@
     form.parentNode.insertBefore(alertDiv, form);
   }
 
-  // Registration form handler
   document.getElementById('registerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const formData = new FormData(this);
+
+    // Get separate name fields
+    const firstName = formData.get('firstName');
+    const lastName = formData.get('lastName');
+
     const data = {
-      name: formData.get('name'),
+      name: firstName + ' ' + lastName,  // Keep for backward compatibility
+      firstName: firstName,
+      lastName: lastName,
       email: formData.get('email'),
+      password: formData.get('password'),
       major: formData.get('major'),
       role: selectedRole,
       termsAccepted: formData.get('termsAccepted') === 'on',
       privacyAccepted: formData.get('privacyAccepted') === 'on'
     };
 
-    // Validation
-    if (!data.name || !data.email || !data.major || !selectedRole) {
+    // Validation with new fields
+    if (!data.firstName || !data.lastName || !data.email || !data.password || !data.major || !selectedRole) {
       showAlert('Please fill in all required fields and select your role');
       return;
     }
@@ -561,10 +573,8 @@
 
         showAlert('Account created successfully! Redirecting...', 'success');
 
-        // Store user info
         localStorage.setItem('currentUser', JSON.stringify(user));
 
-        // Redirect based on role
         setTimeout(() => {
           if (user.role === 'TUTOR') {
             window.location.href = `/tutor-profile?userId=${user.id}`;
@@ -583,7 +593,6 @@
     }
   });
 
-  // Email validation for university domains
   document.getElementById('email').addEventListener('blur', function() {
     const email = this.value;
     const universityDomains = ['.edu', '.ac.', 'university', 'college'];

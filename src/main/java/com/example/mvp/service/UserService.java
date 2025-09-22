@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-// UserService
 @Service
 @Transactional
 public class UserService {
@@ -27,6 +26,21 @@ public class UserService {
         User user = new User(dto.getName(), dto.getEmail(), dto.getMajor(), dto.getRole());
         user.setTermsAccepted(dto.getTermsAccepted());
         user.setPrivacyAccepted(dto.getPrivacyAccepted());
+
+        // ADD NEW FIELDS
+        if (dto.getFirstName() != null) {
+            user.setFirstName(dto.getFirstName());
+        }
+        if (dto.getLastName() != null) {
+            user.setLastName(dto.getLastName());
+        }
+        if (dto.getPassword() != null) {
+            user.setPassword(dto.getPassword());
+        }
+        // Set name field as combination if separate names provided
+        if (dto.getFirstName() != null && dto.getLastName() != null) {
+            user.setName(dto.getFirstName() + " " + dto.getLastName());
+        }
 
         return userRepository.save(user);
     }

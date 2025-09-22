@@ -20,6 +20,16 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    // ADD THESE NEW FIELDS
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "password")
+    private String password;
+
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email is required")
     @Column(nullable = false, unique = true)
@@ -35,7 +45,6 @@ public class User {
     @Column(nullable = false)
     private UserRole role;
 
-    // ADD THESE NEW FIELDS
     @Column(name = "course_code")
     private String courseCode;
 
@@ -71,6 +80,12 @@ public class User {
         this.privacyAccepted = true;
     }
 
+    // Helper method for public display (first name only)
+    @Transient
+    public String getDisplayName() {
+        return firstName != null ? firstName : name;
+    }
+
     // Existing getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -87,7 +102,6 @@ public class User {
     public UserRole getRole() { return role; }
     public void setRole(UserRole role) { this.role = role; }
 
-    // ADD THESE NEW GETTERS AND SETTERS
     public String getCourseCode() { return courseCode; }
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
 
@@ -105,4 +119,14 @@ public class User {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    // ADD NEW GETTERS AND SETTERS
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
