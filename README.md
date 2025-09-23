@@ -15,7 +15,7 @@ Welcome interface showcasing the platform's core value proposition for universit
 <summary>▶️ <b>2. Student Dashboard & Learning Hub</b></summary>
 Main student interface featuring session management, tutor discovery, and academic progress tracking.
   
-![x](https://github.com/user-attachments/assets/e1d1114f-99a5-4998-b63c-44306ce0a119)
+![z](https://github.com/user-attachments/assets/7c6eb0c0-6bf9-41fc-a850-4c174029d0ae)
 </details>
 
 <details>
