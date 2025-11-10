@@ -4,6 +4,8 @@ A peer-to-peer tutoring platform connecting university students for academic sup
 ## 🎬 Demo Walkthrough
 **User Journey:** Landing Page → Student Dashboard → Tutor Management → Session Booking → Messaging
 
+**(gif file may take 1-2 minute to load due to the size)**
+
 <details>
 <summary>▶️ <b>1. Landing Page & Platform Overview</b></summary>
 Welcome interface showcasing the platform's core value proposition for university students.
